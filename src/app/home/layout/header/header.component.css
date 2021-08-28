@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+.header-container {
+  height: 60px;
+
+}
+.header-icon {
+  height: 100%;
+  font-size: 25px;
+  color: #0000008c;
+}
+
+.brand-name {
+  position: relative;
+  left: -120px;
+}
+
+.font-sans-serif {
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 800;
+  font-size: 1.7rem;
+  color: #2c7be5;
+}

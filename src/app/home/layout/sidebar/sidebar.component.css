@@ -1,0 +1,38 @@
+.sidebar{
+  width: 100%;
+}
+
+.text-sidebar {
+  color: #5e6e82;
+}
+
+.nav-menu{
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.nav-menu li {
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-weight: 600;
+}
+.active {
+  color: #00a3ff;
+  background-color: #F7F9FB;
+}
+.nav-menu li:hover {
+  filter: brightness(120%);
+  color: #00a3ff;
+  transition: all 0.4s ease;
+}
+.nav-menu li:first-child {
+  margin-top: 20px;
+}
+.nav-menu fa-icon {
+  margin-right: 13px;
+  font-size: 25px;
+}

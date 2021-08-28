@@ -1,0 +1,16 @@
+.footer {
+  height: 63px;
+}
+.footer-container {
+  height: 100%;
+}
+
+.icon-love {
+  color: red;
+  font-size: 20px;
+  align-self: center;
+}
+
+.text-footer {
+  color: #748194;
+}

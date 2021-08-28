@@ -1,0 +1,48 @@
+
+  <div class="content mx-auto text-center pt-3 card p-4 border-0">
+    <div>
+    </div>
+    <div class="input-form" *ngIf="!isShowOutput">
+      <form action="#" class="" [formGroup]="priceInputForm">
+          <input formControlName="price" type="number"
+                 class="form-control w-50 mx-auto d-inline-block me-4 align-self-baseline mt-4" id="price"
+                 name="price" placeholder="Enter price ...">
+          <button type="button" class="btn btn-info text-white d-inline-block align-self-baseline m-0"
+                  (click)="handleGenerateLink()" >Generate</button>
+
+
+      </form>
+    </div>
+    <ng-container *ngIf="isLoading">
+      <div class="text-center">
+        <div class="spinner-border text-primary mt-4 " role="status">
+          <span class="visually-hidden mx-auto">Loading...</span>
+        </div>
+      </div>
+
+    </ng-container>
+    <div class="row" *ngIf="isShowOutput">
+      <div class="col-12 col-sm-7">
+        <div class="output-form mt-3">
+          <p >Your link:</p>
+          <div class="output-link w-100 h-auto mx-auto position-relative">
+        <textarea #urlBarcodeText [ngClass]="{'copied': isCopied}" rows="1" class="w-100 form-control "
+                  [value]="urlBarcode">
+        </textarea>
+            <!--<span (click)="copyLink()"
+                  class="btn-copy position-absolute"><span *ngIf="!isCopied">Copy link</span><span *ngIf="isCopied">
+              Copied</span></span>-->
+            <span class="btn btn-primary mt-3" (click)="handleSaveBarcode()">Save</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-5 align-self-center fw-bold f-14">
+        <p style="color:red;">Do not hand over your mobile device to anyone at any time</p>
+        <img src="{{imgBarcodeUrl}}" alt="" width="240" height="80">
+        <p class="m-0 ">{{numberBarcode}}</p>
+        <p class="m-0">{{price}}£</p>
+      </div>
+    </div>
+
+  </div>
+
