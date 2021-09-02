@@ -1,0 +1,140 @@
+<div class="setting-container mb-4">
+  <div class="mx-auto col-11 col-md-9 col-lg-8">
+    <div class="setting box-shadow">
+
+      <!--Button of tabs list-->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <!--Pay 360API Button-->
+        <ng-container>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active text-color-secondary fw-600"
+              id="apiSetting-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#apiSetting"
+              type="button"
+              role="tab"
+              aria-controls="apiSetting"
+              aria-selected="false"
+            >
+              Pay 360 API
+            </button>
+          </li>
+        </ng-container>
+
+        <!--Mail Sever Button-->
+        <ng-container>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link text-color-secondary fw-600"
+              id="mailServeSetting-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#mailServeSetting"
+              type="button"
+              role="tab"
+              aria-controls="mailServeSetting"
+              aria-selected="false"
+            >
+              Mail serve
+            </button>
+          </li>
+        </ng-container>
+
+        <!--Admin User Button-->
+        <ng-container>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link text-color-secondary fw-600"
+              id="userSetting-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#userSetting"
+              type="button"
+              role="tab"
+              aria-controls="userSetting"
+              aria-selected="true"
+            >
+              Admin User
+            </button>
+          </li>
+        </ng-container>
+
+        <!--Change password Button-->
+        <ng-container>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link text-color-secondary fw-600"
+              id="changePass-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#changePass"
+              type="button"
+              role="tab"
+              aria-controls="changePass"
+              aria-selected="false"
+            >
+              Change Password
+            </button>
+          </li>
+        </ng-container>
+      </ul>
+
+      <!--Content of tab-->
+      <div class="tab-content" id="myTabContent">
+        <!--Admin setting Content-->
+        <ng-container>
+          <div
+            class="tab-pane fade"
+            id="userSetting"
+            role="tabpanel"
+            aria-labelledby="userSetting-tab"
+          >
+            <div class="mt-3">
+              <app-user-setting-form></app-user-setting-form>
+            </div>
+          </div>
+        </ng-container>
+
+        <!--API 360 Setting content-->
+        <ng-container>
+          <div
+            class="tab-pane fade show active"
+            id="apiSetting"
+            role="tabpanel"
+            aria-labelledby="apiSetting-tab"
+          >
+            <div class="mt-3">
+              <app-api-setting-form></app-api-setting-form>
+            </div>
+          </div>
+        </ng-container>
+
+        <!--Mail server setting content-->
+        <ng-container>
+          <div
+            class="tab-pane fade"
+            id="mailServeSetting"
+            role="tabpanel"
+            aria-labelledby="mailServeSetting-tab"
+          >
+            <div class="mt-3">
+              <app-mailserve-setting-form></app-mailserve-setting-form>
+            </div>
+          </div>
+        </ng-container>
+
+        <!--Change Password content-->
+        <ng-container>
+          <div
+            class="tab-pane fade"
+            id="changePass"
+            role="tabpanel"
+            aria-labelledby="changePass-tab"
+          >
+            <div class="mt-3">
+              <app-change-pass-form></app-change-pass-form>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="api-setting">
+  <!--Show spinner when innit loading-->
+  <ng-container *ngIf="isShowLoadingInit">
+    <app-spinner-loading></app-spinner-loading>
+  </ng-container>
+
+  <ng-container *ngIf="isShowErrorInit">
+    <app-alert-fail [message]="'Cant not load setting from server!'"></app-alert-fail>
+  </ng-container>
+  <!--Form setting API 360-->
+  <ng-container *ngIf="!isShowLoadingInit">
+    <form action="#" [formGroup]="apiSettingForm">
+      <div class="row mb-3">
+        <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+          <ng-container class="mb-3">
+            <label class="form-label">API Username</label>
+            <input
+              formControlName="apiUser"
+              class="form-control"
+              type="text"
+              value="U5FOWYWGZZEDJMVPT2CW4NW3LQ"
+            />
+          </ng-container>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+          <ng-container class="mb-3">
+            <label class="form-label">API Password</label>
+            <input
+              formControlName="apiPassword"
+              class="form-control"
+              type="text"
+              value="EwYO+qsdXYOZRfogZEwUjA=="
+            />
+          </ng-container>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+          <ng-container>
+            <label class="form-label">CardLock ID</label>
+            <input
+              formControlName="apiCardLockId"
+              class="form-control"
+              type="text"
+              value="568y5klbRiSjrsAKDPntfQ"
+            />
+          </ng-container>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+          <ng-container class="mb-3">
+            <label class="form-label">Installations: Cashier API</label>
+            <input
+              formControlName="apiInst"
+              class="form-control"
+              type="text"
+              value="5308695"
+            />
+          </ng-container>
+        </div>
+      </div>
+
+      <!--Show loading spinner-->
+      <ng-container *ngIf="isShowLoading">
+        <div class="mb-3">
+          <app-spinner-loading></app-spinner-loading>
+        </div>
+      </ng-container>
+
+      <!--Show alert when submit save-->
+      <!--Save success alert-->
+      <ng-container *ngIf="isShowSuccessAlert">
+        <app-alert-success [message]="'Save setting success!'"></app-alert-success>
+      </ng-container>
+
+      <!--Save fail alert-->
+      <ng-container *ngIf="isShowFailAlert">
+        <app-alert-fail [message]="'Save setting fail!'"></app-alert-fail>
+      </ng-container>
+
+      <!--Button save-->
+      <ng-container *ngIf="isShowButtonSave">
+        <div class="row mb-3">
+          <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+            <div class="text-center mt-3">
+              <button [disabled]="isDisableButton" (click)="getDefaultSetting()"
+                      class="btn btn-secondary me-4 btn-disable">Default Setting</button>
+              <button
+                class="btn btn-primary btn-disable"
+                [disabled]="apiSettingForm.invalid || isDisableButton"
+                (click)="handleSave()"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+
+    </form>
+  </ng-container>
+</div>

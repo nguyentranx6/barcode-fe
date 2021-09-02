@@ -1,0 +1,12 @@
+.setting-container {
+
+}
+.setting {
+  padding: 15px;
+
+}
+
+.nav-link.active {
+  border-color:#dee2e6 #dee2e6 #fff !important;
+  color: #00a3ff!important;
+}

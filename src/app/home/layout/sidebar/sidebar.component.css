@@ -1,5 +1,6 @@
 .sidebar{
   width: 100%;
+
 }
 
 .text-sidebar {
@@ -22,7 +23,6 @@
 }
 .active {
   color: #00a3ff;
-  background-color: #F7F9FB;
 }
 .nav-menu li:hover {
   filter: brightness(120%);
@@ -35,4 +35,14 @@
 .nav-menu fa-icon {
   margin-right: 13px;
   font-size: 25px;
+}
+.logo {
+  cursor: pointer;
+}
+
+@media (max-width: 768px){
+  .nav-menu li {
+    justify-content: center;
+    margin-left: 10px;
+  }
 }

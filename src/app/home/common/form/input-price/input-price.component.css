@@ -1,9 +1,24 @@
 /* Input price CSS */
+.input-container {
+  border-radius: 8px;
+  padding: 50px 20px;
+  width: 90%;
+  margin: 0 auto;
+}
+.input-content {
+ /*// background-color: #eeb4cf;*/
+  /*background-color: #D1E7DD;*/
+
+}
+
 .output-form:hover .btn-copy{
   display: block;
 }
 
-
+.btn-save {
+  background-color: #00a3ff;
+  color: white;
+}
 .btn-copy {
   top: 10px;
   right: 10px;
@@ -24,4 +39,20 @@
 .copied{
 font-style: italic;
   background-color: lightgrey;
+}
+
+/* Italic input value when focus and blur*/
+#output-url:focus {
+  font-style: italic;
+}
+
+input.after-copy {
+  font-style: italic;
+}
+/* Responsive */
+
+@media (max-width: 576px) {
+  .input-container {
+    width: 100%;
+  }
 }

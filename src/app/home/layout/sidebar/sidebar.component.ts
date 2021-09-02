@@ -14,6 +14,7 @@ faHome = faHome;
 faLink = faLink;
 faSetting = faCog;
 faBell = faBell;
+faList  = faList;
   constructor() { }
 
   ngOnInit(): void {

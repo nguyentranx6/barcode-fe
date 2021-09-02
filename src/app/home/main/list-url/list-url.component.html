@@ -1,30 +1,64 @@
-<div class="list-url">
-  <div class="url-list mt-3 table-responsive">
-    <table class="table table-md table-bordered">
-      <thead>
-      <tr class = "bg-primary text-white">
-        <th>ID</th>
-        <th>Price (£)</th>
-        <th>Barcode Link</th>
-        <th>Date Created</th>
-        <th>Status</th>
-        <th>Edit</th>
-      </tr>
-      </thead>
-      <tbody>
-      <!--<ng-container *ngIf="listUrlData.length>0">
-        <tr *ngFor="let item of listUrlData; index as i">
-          <td>{{i +1}}</td>
-          <td>{{item?.price}}</td>
-          <td><a class="text-decoration-none" href="{{item?.url}}">{{item?.url}}</a></td>
-          <td>{{item?.dateCreated | date: "dd/MM/yy"}}</td>
-          <td>spending</td>
-          <td><button class="btn btn-danger" (click)="deleteItemUrl(item?.id)">Delete</button></td>
+<div class="list-url-container">
+  <!--Show loading spinner-->
+  <ng-container *ngIf="!(barcodes$|async)">
+    <div class="text-center">
+      <app-spinner-loading></app-spinner-loading>
+    </div>
+  </ng-container>
+
+  <!--Url list content-->
+  <div class="list-url box-shadow p-4" *ngIf="(barcodes$ | async) as barcodes">
+    <div class="search-container">
+      <input type="text" class="search form-control" placeholder="Search ...">
+    </div>
+    <div class="url-list mt-3 table-responsive">
+      <table class="table table-md table-bordered">
+        <thead>
+        <tr class="bg-primary text-white text-center">
+          <th>ID</th>
+          <th>Price (£)</th>
+          <th>Barcode Link</th>
+          <th>Date Created</th>
+          <th>Status</th>
+          <th>Edit</th>
         </tr>
-      </ng-container>-->
+        </thead>
+        <tbody>
+        <ng-container>
+          <tr *ngFor="let item of barcodes; index as i">
+            <td>{{item?.transactionId}}</td>
+            <td class="text-center">{{item?.price}}</td>
+            <td><a class="text-decoration-none" href="{{item?.url}}">{{item?.url}}</a></td>
+            <td>{{item?.transactionTime | date: "dd/MM/yyyy"}}</td>
+            <td>{{item?.status}}</td>
+            <td>
+              <button class="btn btn-danger" (click)="deleteItemUrl(item?._id)">Delete</button>
+            </td>
+          </tr>
+        </ng-container>
 
-      </tbody>
+        </tbody>
 
-    </table>
+      </table>
+      <!--Pagination-->
+      <div class="pagination d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
 </div>
+

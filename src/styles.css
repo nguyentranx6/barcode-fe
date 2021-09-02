@@ -1,11 +1,91 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
+
+:root{
+  --text-color-primay: #00a3ff;
+}
 .f-14 {
   font-size: 14.4px;
+}
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 body {
   background-color: #EDF2F9;
   width: 100vw;
   height: 100vh;
+}
+/* Set global text color and background color*/
+.text-color-primary {
+  color: #00a3ff;
+}
+.text-color-secondary {
+  color: #5e6e82!important;
+}
+.bg-color-primary{
+  background-color: #EDF2F9;
+}
+
+.fw-600 {
+  font-weight: 600!important;
+}
+
+.font-sans-serif {
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 800;
+  font-size: 1.7rem;
+  color: #00a3ff;
+}
+/* Hover cursor */
+.hover-cursor {
+  cursor: pointer;
+}
+
+.div-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Custom box shadow*/
+.box-shadow {
+  box-shadow: 0 3px 15px 0 rgba(0,0,0, 0.25);
+  -webkit-box-shadow: 0 3px 15px 0 rgba(0,0,0, 0.25);
+  -moz-box-shadow: 0 3px 15px 0 rgba(0,0,0, 0.25);
+
+}
+.boder-radius-8{
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+}
+
+/* Fade in, Fade out effect */
+.fade-in-alert {
+  animation: fadeIn 0.5s ease-in-out 0s 1;
+}
+.fade-out-alert {
+  animation: fadeOut 0.5s ease-out 2.5s 1;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+@keyframes fadeOut {
+  0% {opacity:1;}
+  100% {opacity:0;}
+}
+/* Button disable effect */
+.btn-disable:disabled {
+  opacity: 0.5;
+  border: none;
 }

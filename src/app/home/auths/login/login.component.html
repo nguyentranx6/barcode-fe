@@ -1,0 +1,110 @@
+<div class="login-container">
+  <div class="login box-shadow">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-10  p-3">
+        <!--Title-->
+        <div class="div-center mb-3">
+          <img class="img-fluid" src="assets/img/logo.png" alt="Logo">
+          <p class="h3 text-color-primary text-center mb-3">Barcode Generate System</p>
+        </div>
+
+        <!--Form login-->
+        <ng-container *ngIf="isShowLoginForm">
+          <form
+            [formGroup]="loginForm"
+            class="form-control bg-color-primary"
+            (ngSubmit)="handleLogin()"
+          >
+
+            <!--Input Email-->
+            <ng-container>
+              <label for="email" class="mb-3 text-color-primary fw-600">Email</label>
+              <input
+                #email
+                type="email"
+                class="form-control mb-3"
+                id="email"
+                formControlName="email"
+                required
+                placeholder="Enter your email ..."
+              />
+            </ng-container>
+
+            <!--Show errors-->
+            <ng-container>
+              <!--Show notice when user not input email-->
+              <ng-container
+                *ngIf="
+                !loginForm.controls['email'].valid &&
+                loginForm.controls['email'].touched
+              "
+              >
+                <p class="text-danger" role="alert">
+                  * Please enter correct email !
+                </p>
+              </ng-container>
+
+              <!--Show notice when user not correct-->
+              <ng-container *ngIf="isShowError">
+                <p class="text-danger" role="alert">
+                  * Incorrect email or password ! Please try again.
+                </p>
+              </ng-container>
+            </ng-container>
+
+            <!--Input Password-->
+            <ng-container>
+              <label class="mb-3 text-color-primary fw-600" for="password">Password</label>
+              <input
+                #password
+                type="password"
+                class="form-control mb-3"
+                id="password"
+                formControlName="password"
+                required
+                [ngClass]="{ 'alert-form': isShowRequirePass }"
+                placeholder="Enter your password ..."
+              />
+              <!--Show notice when user not input password-->
+              <ng-container *ngIf="isShowRequirePass">
+              <span class="text-danger fw-600" role="alert"
+              >* Please enter your password !</span
+              >
+              </ng-container>
+            </ng-container>
+
+            <!--Button login-->
+            <div class="text-center mt-4">
+              <button
+                #btnLogin
+                [disabled]="loginForm.invalid"
+                class="btn btn-primary btn-login"
+                type="submit"
+              >
+                Login
+              </button>
+            </div>
+
+            <!--Forgot password-->
+            <div class="text-end mt-2">
+              <span (click)="handleForgotPassword()" class="btn-forgot-pass text-muted small fst-italic hover-cursor">* Forgot
+                password</span>
+            </div>
+
+            <!--Show spinner-->
+            <ng-container *ngIf="isShowLoading">
+              <app-spinner-loading></app-spinner-loading>
+            </ng-container>
+
+          </form>
+        </ng-container>
+
+        <!--Forgot password form-->
+        <ng-container *ngIf="isShowSubmitForgotForm">
+          <app-forgot-password (doneSummitForgot)="handleAfterSubmit($event)" ></app-forgot-password>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>

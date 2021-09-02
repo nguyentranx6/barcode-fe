@@ -12,6 +12,23 @@ import { FooterComponent } from './home/layout/footer/footer.component';
 import { HeaderComponent } from './home/layout/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ListUrlComponent } from './home/main/list-url/list-url.component';
+import { LoginComponent } from './home/auths/login/login.component';
+import { AdminLayoutComponent } from './container/admin-layout/admin-layout.component';
+import { HomeLayoutComponent } from './container/home-layout/home-layout.component';
+import {RouterModule} from "@angular/router";
+import { NotFoundComponent } from './home/common/not-found/not-found.component';
+import { NotificationComponent } from './home/main/notification/notification.component';
+import { SettingComponent } from './home/main/setting/setting.component';
+import { AlertModalComponent } from './home/common/alert/alert-modal/alert-modal.component';
+import {ApiSettingFormComponent} from "./home/common/form/api-setting-form/api-setting-form.component";
+import {UserSettingFormComponent} from "./home/common/form/user-setting-form/user-setting-form.component";
+import {MailserveSettingFormComponent} from "./home/common/form/mailserve-setting-form/mailserve-setting-form.component";
+import { ChangePassFormComponent } from './home/common/form/change-pass-form/change-pass-form.component';
+import { AlertSuccessComponent } from './home/common/alert/alert-success/alert-success.component';
+import { AlertFailComponent } from './home/common/alert/alert-fail/alert-fail.component';
+import { SpinnerLoadingComponent } from './home/common/spinner/spinner-loading/spinner-loading.component';
+import { ForgotPasswordComponent } from './home/auths/forgot-password/forgot-password.component';
+
 
 
 @NgModule({
@@ -21,16 +38,32 @@ import { ListUrlComponent } from './home/main/list-url/list-url.component';
     SidebarComponent,
     FooterComponent,
     HeaderComponent,
-    ListUrlComponent
+    ListUrlComponent,
+    LoginComponent,
+    AdminLayoutComponent,
+    HomeLayoutComponent,
+    NotFoundComponent,
+    NotificationComponent,
+    SettingComponent,
+    AlertModalComponent,
+    ApiSettingFormComponent,
+    UserSettingFormComponent,
+    MailserveSettingFormComponent,
+    ChangePassFormComponent,
+    AlertSuccessComponent,
+    AlertFailComponent,
+    SpinnerLoadingComponent,
+    ForgotPasswordComponent
   ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-   // AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    FontAwesomeModule,
-  ],
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        FontAwesomeModule,
+        RouterModule,
+    ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptorInterceptor,

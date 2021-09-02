@@ -1,0 +1,31 @@
+<div class="change-pass-setting">
+  <form [formGroup]="changePassSettingForm">
+    <div class="row mb-3">
+      <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+        <div class="mb-3">
+          <label for="newPass" class="form-label">New Password</label>
+          <input type="password" class="form-control" id="newPass" formControlName="newPass">
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+        <div class="mb-3">
+          <label for="newPassRepeat" class="form-label">Repeat New Password</label>
+          <input type="password" class="form-control" id="newPassRepeat" formControlName="newPassRepeat">
+        </div>
+      </div>
+    </div>
+
+    <!--Button save-->
+    <div class="row mb-3">
+      <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+        <div class="text-center mt-3">
+          <button class="btn btn-danger me-3">Cancel</button>
+          <button class="btn btn-primary me-3">Save</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
