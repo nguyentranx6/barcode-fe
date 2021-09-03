@@ -34,6 +34,10 @@ body {
   background-color: #EDF2F9;
 }
 
+.bg-color-secondary{
+  background-color: #00a3ff;
+}
+
 .fw-600 {
   font-weight: 600!important;
 }
@@ -86,6 +90,6 @@ body {
 }
 /* Button disable effect */
 .btn-disable:disabled {
-  opacity: 0.5;
+  opacity: 0.3;
   border: none;
 }

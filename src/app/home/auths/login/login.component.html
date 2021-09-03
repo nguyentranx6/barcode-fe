@@ -26,7 +26,7 @@
                 id="email"
                 formControlName="email"
                 required
-                placeholder="Enter your email ..."
+                placeholder="admin@gmail.com"
               />
             </ng-container>
 
@@ -63,7 +63,7 @@
                 formControlName="password"
                 required
                 [ngClass]="{ 'alert-form': isShowRequirePass }"
-                placeholder="Enter your password ..."
+                placeholder="123456"
               />
               <!--Show notice when user not input password-->
               <ng-container *ngIf="isShowRequirePass">

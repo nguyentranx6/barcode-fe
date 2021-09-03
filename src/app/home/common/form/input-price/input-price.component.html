@@ -1,60 +1,178 @@
- <div class="input-container box-shadow">
-   <div class="input-content mx-auto text-center border-0">
-     <!--Input form-->
-     <div class="input-form" *ngIf="!isShowOutput">
-       <form action="#" class="d-flex justify-content-center align-items-center" [formGroup]="priceInputForm">
-           <input formControlName="price" type="number"
-                  class="form-control w-50 d-inline-block me-3" id="price"
-                  name="price" placeholder="Enter price ...">
-           <button type="button" class="btn btn-info text-white d-inline-block m-0"
-                   (click)="handleGenerateLink()" >Generate</button>
+<div class="input-container box-shadow">
+  <div class="input-content mx-auto border-0">
+    <!--Input form-->
+    <div class="input-form" *ngIf="false">
+      <form action="#" class="" [formGroup]="priceInputForm">
+        <!--Client Name Input-->
+        <div class="row mb-3">
+          <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+            <ng-container class="mb-3">
+              <label class="form-label" for="clientName">Client Name</label>
+              <input
+                formControlName="clientName"
+                type="text"
+                class="form-control"
+                id="clientName"
+                name="price"
+              />
+            </ng-container>
+          </div>
+        </div>
+        <!--Invoice number Input-->
+        <div class="row mb-3">
+          <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+            <div class="mb-3 position-relative">
+              <label class="form-label" for="invoiceNumber"
+              >Invoice Number</label
+              >
+              <input
+                formControlName="invoiceNumber"
+                type="text"
+                class="form-control"
+                id="invoiceNumber"
+                name="price"
+              />
 
-       </form>
-     </div>
+              <!--Show loading spinner check invoice-->
+              <ng-container *ngIf="isShowLoadingCheckInvoice">
+                <div
+                  class="
+                    spinner-border
+                    text-color-primary
+                    spinner-border-sm spinner-check-invoice
+                  "
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </ng-container>
+            </div>
+            <!--Show notice when check exist invoice number-->
+            <ng-container *ngIf="isShowExistCheckInvoice">
+              <p class="text-danger mb-0" role="alert">
+                * This invoice number is exist ! Please try other.
+              </p>
+            </ng-container>
 
-     <!--Show loading spinner-->
-     <ng-container *ngIf="isLoading">
-        <app-spinner-loading></app-spinner-loading>
-     </ng-container>
+            <!--Show notice when check invoice number get error-->
+            <ng-container *ngIf="isShowErrorCheckInvoice">
+              <p class="text-danger mb-0" role="alert">* Serve get error !</p>
+            </ng-container>
+          </div>
+        </div>
+        <!--Price Input-->
+        <div class="row mb-3">
+          <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+            <ng-container class="mb-3">
+              <label class="form-label" for="price">Price</label>
+              <input
+                formControlName="price"
+                type="number"
+                class="form-control"
+                id="price"
+                name="price"
+              />
+            </ng-container>
+          </div>
+        </div>
+        <!--Button-->
+        <div class="row mb-3 mt-2">
+          <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10 text-center">
+            <ng-container class="mb-3">
+              <button
+                [disabled]="priceInputForm.invalid"
+                type="button"
+                class="btn btn-primary btn-disable"
+                (click)="handleGenerateLink()"
+              >
+                Generate
+              </button>
+            </ng-container>
+          </div>
+        </div>
+      </form>
+    </div>
 
-     <!--Show alert request fail-->
-     <ng-container>
-       <div *ngIf="isShowAlertFail" class="text-danger fw-bold mb-3">Generate barcode get error !!!</div>
-     </ng-container>
+    <!--Show loading spinner-->
+    <ng-container *ngIf="isLoading">
+      <app-spinner-loading></app-spinner-loading>
+    </ng-container>
 
-     <!--Show result success-->
-     <div class="row" *ngIf="isShowOutput">
-       <div class="col-12 col-md-7">
-         <div class="output-form mt-3">
-           <div *ngIf="isShowAlertSuccess" class="text-success fw-bold mb-3">Generate successful, your link is:</div>
-           <div class="input-group">
-             <input #outputUrl id="output-url" [value]="urlBarcode" class="form-control" type="text">
-             <button title="Copy to clipboard"
-               class="btn btn-secondary" (click)="handleCopy($event)">
-               Copy</button>
-           </div>
-           <span #saveButton class="btn btn-save mt-3 mb-4" (click)="handleSaveBarcode()">Save</span>
-         </div>
-       </div>
-       <div class="col-12 col-md-5 align-self-center fw-bold f-14">
-         <p style="color:red;">Do not hand over your mobile device to anyone at any time</p>
-         <img src="{{imgBarcodeUrl}}" alt="Img barcode" width="240" height="80">
-         <p class="m-0 text-color-secondary">{{numberBarcode}}</p>
-         <p class="m-0 text-color-primary">{{price}} £</p>
-       </div>
-     </div>
+    <!--Show alert request fail-->
+    <ng-container>
+      <div *ngIf="isShowAlertFail" class="text-danger fw-bold mb-3">
+        Generate barcode get error !!!
+      </div>
+    </ng-container>
 
-     <!--Show alert notify save barcode success or fail-->
-     <!--Alert success-->
-     <ng-container *ngIf="isShowAlertSaveSuccess" >
-       <app-alert-success [message]="'Save success!'"></app-alert-success>
-     </ng-container>
-     <!--Alert fail-->
-     <ng-container *ngIf="isShowAlertFail">
-       <app-alert-fail [message]="'Save failed!!!'"></app-alert-fail>
-     </ng-container>
+    <!--Show output result success-->
+    <div class="row text-center" *ngIf="true">
+      <div class="col-12 col-md-7">
+        <div class="output-form mt-3">
+          <div *ngIf="isShowAlertSuccess" class="text-success fw-bold mb-3">
+            Generate successful, your link is:
+          </div>
+          <div *ngIf="true" class="text-success fw-bold mb-3">
+            Generate successful, your link is:
+          </div>
+          <div class="input-group">
+            <input
+              disabled
+              #outputUrl
+              id="output-url"
+              value="Link is hidden"
+              class="form-control"
+              type="text"
+            />
+            <button
+              title="Copy to clipboard"
+              class="btn btn-secondary"
+              (click)="handleCopy($event)"
+            >
+              Copy
+            </button>
+          </div>
+          <div>
+             <span
+               #showButton
+               class="btn btn-secondary mt-3 mb-4 me-4"
+               (click)="handleToggleShowLink($event)"
+             >Show</span
+             >
+            <span
+              #saveButton
+              class="btn btn-save mt-3 mb-4"
+              (click)="handleSaveBarcode()"
+            >Save</span
+            >
 
-   </div>
- </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-5 align-self-center fw-bold f-14">
+        <p style="color: red">
+          Do not hand over your mobile device to anyone at any time
+        </p>
+        <img
+          src="{{ imgBarcodeUrl }}"
+          alt="Img barcode"
+          width="240"
+          height="80"
+        />
+        <p class="m-0 text-color-secondary">{{ numberBarcode }}</p>
+        <p class="m-0 text-color-primary">{{ price }} £</p>
+      </div>
+    </div>
 
+    <!--Show alert notify save barcode success or fail-->
+    <!--Alert success-->
+    <ng-container *ngIf="isShowAlertSaveSuccess">
+      <app-alert-success [message]="'Save success!'"></app-alert-success>
+    </ng-container>
 
+    <!--Alert fail-->
+    <ng-container *ngIf="isShowAlertFail">
+      <app-alert-fail [message]="'Save failed!!!'"></app-alert-fail>
+    </ng-container>
+  </div>
+</div>

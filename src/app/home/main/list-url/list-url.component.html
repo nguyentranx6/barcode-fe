@@ -8,32 +8,36 @@
 
   <!--Url list content-->
   <div class="list-url box-shadow p-4" *ngIf="(barcodes$ | async) as barcodes">
-    <div class="search-container">
-      <input type="text" class="search form-control" placeholder="Search ...">
-    </div>
+    <form class="search-container d-flex" [formGroup]="formSearch" (ngSubmit)="handleSearch()">
+      <input formControlName="keySearch" class="form-control me-2" type="search" placeholder="..." aria-label="Search">
+      <button type="submit" [disabled]="formSearch.invalid" class="btn btn-outline-primary" type="submit">Search</button>
+    </form>
     <div class="url-list mt-3 table-responsive">
       <table class="table table-md table-bordered">
         <thead>
-        <tr class="bg-primary text-white text-center">
-          <th>ID</th>
-          <th>Price (£)</th>
-          <th>Barcode Link</th>
-          <th>Date Created</th>
+        <tr class="bg-color-secondary text-white text-center">
+          <th>Invoice</th>
+          <th>Client</th>
+          <th>Price</th>
+          <th>Link</th>
+          <th>Created Date</th>
+          <th>Date Paid</th>
           <th>Status</th>
-          <th>Edit</th>
         </tr>
         </thead>
         <tbody>
         <ng-container>
           <tr *ngFor="let item of barcodes; index as i">
-            <td>{{item?.transactionId}}</td>
+            <td>{{item?.invoiceNumber}}</td>
+            <td>{{item?.clientName}}</td>
             <td class="text-center">{{item?.price}}</td>
             <td><a class="text-decoration-none" href="{{item?.url}}">{{item?.url}}</a></td>
             <td>{{item?.transactionTime | date: "dd/MM/yyyy"}}</td>
+            <td>{{item?.receivedTime | date: "dd/MM/yyyy"}}</td>
             <td>{{item?.status}}</td>
-            <td>
+            <!--<td>
               <button class="btn btn-danger" (click)="deleteItemUrl(item?._id)">Delete</button>
-            </td>
+            </td>-->
           </tr>
         </ng-container>
 

@@ -49,10 +49,26 @@ font-style: italic;
 input.after-copy {
   font-style: italic;
 }
+
+/* Spinner checkinvoice */
+.spinner-check-invoice {
+  position: absolute;
+  top: 45px;
+  right: -25px;
+}
+
+
 /* Responsive */
 
 @media (max-width: 576px) {
   .input-container {
     width: 100%;
   }
+  .spinner-check-invoice {
+
+    top: 40px;
+    right: 20px;
+  }
 }
+
+
