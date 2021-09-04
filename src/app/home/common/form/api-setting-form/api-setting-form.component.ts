@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SettingService } from '../../../../core/services/setting/setting.service';
 import {map, pluck} from 'rxjs/operators';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-api-setting-form',
@@ -23,6 +24,7 @@ export class ApiSettingFormComponent implements OnInit {
   //Form input setting
   public apiSettingForm: FormGroup;
 
+
   constructor(private settingService: SettingService) {
     this.apiSettingForm = new FormGroup({
       apiUser: new FormControl(null, [Validators.required]),
@@ -30,6 +32,7 @@ export class ApiSettingFormComponent implements OnInit {
       apiCardLockId: new FormControl(null, [Validators.required]),
       apiInst: new FormControl(null, [Validators.required]),
     });
+    console.log("API setting init",)
   }
 
   ngOnInit(): void {

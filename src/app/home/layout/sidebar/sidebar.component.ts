@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {faDashcube, faUncharted} from "@fortawesome/free-brands-svg-icons";
-import {faChartBar, faHome, faList, faCog, faTasks,faLink} from "@fortawesome/free-solid-svg-icons";
+import {faChartBar, faHome, faList, faCog, faTasks,faLink, faHistory} from "@fortawesome/free-solid-svg-icons";
 import {faChartBar as faReChartBar, faBell} from "@fortawesome/free-regular-svg-icons";
 
 @Component({
@@ -9,12 +9,14 @@ import {faChartBar as faReChartBar, faBell} from "@fortawesome/free-regular-svg-
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-faDash = faReChartBar;
-faHome = faHome;
-faLink = faLink;
-faSetting = faCog;
-faBell = faBell;
-faList  = faList;
+  //Icon
+  public faDash = faReChartBar;
+  public faHome = faHome;
+  public faLink = faLink;
+  public faSetting = faCog;
+  public faBell = faBell;
+  public faList  = faList;
+  public faHistory  = faHistory;
   constructor() { }
 
   ngOnInit(): void {

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {map, pluck} from "rxjs/operators";
 import {SettingService} from "../../../../core/services/setting/setting.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-mailserve-setting-form',
@@ -17,17 +18,19 @@ export class MailserveSettingFormComponent implements OnInit {
   public isShowLoading: boolean = false; //Show loading spinner when save data
   public isShowButtonSave: boolean = true; //Show button save
 
+
   //Disable button
   public isDisableButton: boolean = true; //Disable all button, until user edit
   //Form group input
   mailServerForm: FormGroup;
   receiveEmailList: any; // List email receive email notice from callback;
 
+
   constructor(private settingService: SettingService) {
     this.mailServerForm = new FormGroup({
       userEmail: new FormControl('',[Validators.required]),
       appPass: new FormControl('',[Validators.required]),
-      addReceiveEmail: new FormControl('',[Validators.email]),
+      addReceiveEmail: new FormControl('',[Validators.email, Validators.required]),
     })
   }
 
@@ -65,11 +68,24 @@ export class MailserveSettingFormComponent implements OnInit {
           this.isShowLoading = false; // Turn off loading spinner
           this.isShowSuccessAlert = true; // Show success alert;
           this.mailServerForm.patchValue(value); // Set final value to form
-          this.isShowButtonSave = true; // Show button save
+
+
+          //Turnoff alert
+          setTimeout(()=>{
+            this.isShowSuccessAlert = false;
+            this.isShowButtonSave = true; // Show button save
+            this.isDisableButton  = true; //Disable button
+            },3000)
         },
         (error) => {
           this.isShowLoading = false; // Turn off loading spinner
           this.isShowFailAlert = true; // Turn on alert error
+          //Turnoff alert
+          setTimeout(()=>{
+            this.isShowFailAlert = false;
+            this.isShowButtonSave = true; // Show button save
+            this.isDisableButton  = true; //Disable button
+            },3000)
         }
       );
   }
@@ -98,11 +114,21 @@ export class MailserveSettingFormComponent implements OnInit {
       );
   }
 
+  //Handle add email
   handleAddEmail() {
     let newEmail = this.mailServerForm.controls['addReceiveEmail'];
     if(newEmail){
       this.receiveEmailList.push(newEmail.value); // Push to list email
-      newEmail.setValue('') //Reset form input
+      newEmail.reset() //Reset form input
     }
+  }
+
+  //Handle remove item email
+  removeItemEmail(item: any) {
+    const index = this.receiveEmailList.indexOf(item);
+    if (index > -1) {
+      this.receiveEmailList.splice(index, 1);
+    }
+    this.isDisableButton = false;
   }
 }

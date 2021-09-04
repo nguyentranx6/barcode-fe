@@ -7,16 +7,17 @@
   <ng-container *ngIf="isShowErrorInit">
     <app-alert-fail [message]="'Cant not load setting from server!'"></app-alert-fail>
   </ng-container>
+
   <!--Form setting API 360-->
   <ng-container *ngIf="!isShowLoadingInit">
-    <form action="#" [formGroup]="apiSettingForm">
+    <form action="#" [formGroup]="apiSettingForm" class="fade-in-alert">
       <div class="row mb-3">
         <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
           <ng-container class="mb-3">
             <label class="form-label">API Username</label>
             <input
               formControlName="apiUser"
-              class="form-control"
+              class="form-control text-color-secondary"
               type="text"
               value="U5FOWYWGZZEDJMVPT2CW4NW3LQ"
             />
@@ -29,8 +30,8 @@
             <label class="form-label">API Password</label>
             <input
               formControlName="apiPassword"
-              class="form-control"
-              type="text"
+              class="form-control text-color-secondary"
+              type="password"
               value="EwYO+qsdXYOZRfogZEwUjA=="
             />
           </ng-container>
@@ -42,7 +43,7 @@
             <label class="form-label">CardLock ID</label>
             <input
               formControlName="apiCardLockId"
-              class="form-control"
+              class="form-control text-color-secondary"
               type="text"
               value="568y5klbRiSjrsAKDPntfQ"
             />
@@ -55,7 +56,7 @@
             <label class="form-label">Installations: Cashier API</label>
             <input
               formControlName="apiInst"
-              class="form-control"
+              class="form-control text-color-secondary"
               type="text"
               value="5308695"
             />
@@ -83,7 +84,7 @@
 
       <!--Button save-->
       <ng-container *ngIf="isShowButtonSave">
-        <div class="row mb-3">
+        <div class="row mb-3 fade-in-alert">
           <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
             <div class="text-center mt-3">
               <button [disabled]="isDisableButton" (click)="getDefaultSetting()"

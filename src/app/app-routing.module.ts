@@ -9,6 +9,9 @@ import {LoginComponent} from "./home/auths/login/login.component";
 import {NotFoundComponent} from "./home/common/not-found/not-found.component";
 import {SettingComponent} from "./home/main/setting/setting.component";
 import {NotificationComponent} from "./home/main/notification/notification.component";
+import {AdminGuard} from "./core/guard/admin.guard";
+import {AlertSuccessComponent} from "./home/common/alert/alert-success/alert-success.component";
+import {HistoryComponent} from "./home/main/history/history.component";
 
 const routes = [
   {
@@ -19,15 +22,12 @@ const routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    canActivate: [AdminGuard],
     children: [
       {
         path: '',
         redirectTo: 'generate-barcode',
         pathMatch: 'full'
-      },
-      {
-        path: 'generate-barcode',
-        component: InputPriceComponent
       },
       {
         path: 'list',
@@ -38,9 +38,17 @@ const routes = [
         component: NotificationComponent
       },
       {
+        path: 'history',
+        component: HistoryComponent
+      },
+      {
         path: 'setting',
         component: SettingComponent
-      }
+      },
+      {
+        path: 'generate-barcode',
+        component: InputPriceComponent
+      },
     ]
   },
   {

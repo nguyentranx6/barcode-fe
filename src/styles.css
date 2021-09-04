@@ -3,6 +3,8 @@
 
 :root{
   --text-color-primay: #00a3ff;
+  --bg-color-primary:#EDF2F9;
+  --text-color-secondary: #5e6e82
 }
 .f-14 {
   font-size: 14.4px;
@@ -69,6 +71,11 @@ body {
 .boder-radius-8{
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
+}
+
+/* Hover effect */
+.hover-effect:hover {
+  filter: brightness(120%);
 }
 
 /* Fade in, Fade out effect */

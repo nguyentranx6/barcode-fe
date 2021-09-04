@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {ApiService} from "../api/api.service";
 import {Observable} from "rxjs";
 import {shareReplay} from "rxjs/operators";
+import {User} from "../../../shared/modal/modal";
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,13 @@ export class UserService {
     return this.api.post(url, newUser);
   }
 
-  updateUser(dataUpdate:any) {
-    const url = "users/update-user";
+  updateUser(dataUpdate:any):Observable<any> {
+    const url = "user";
     return this.api.put(url, dataUpdate);
   }
 
-  loadUserDetail(id: string) {
-    const url = `users?id=${id}`;
+  getUserDetail(id: string):Observable<any> {
+    const url = `user?id=${id}`;
     return this.api.get(url);
   }
 
@@ -29,4 +30,5 @@ export class UserService {
     const url = `users?id={id}`;
     return this.api.delete(url);
   }
+
 }

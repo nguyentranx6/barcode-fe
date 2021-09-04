@@ -1,7 +1,7 @@
-<div class="input-container box-shadow">
+<div class="input-container box-shadow fade-in-alert">
   <div class="input-content mx-auto border-0">
     <!--Input form-->
-    <div class="input-form" *ngIf="false">
+    <div class="input-form fade-in-alert" *ngIf="isShowInput">
       <form action="#" class="" [formGroup]="priceInputForm">
         <!--Client Name Input-->
         <div class="row mb-3">
@@ -95,74 +95,77 @@
 
     <!--Show loading spinner-->
     <ng-container *ngIf="isLoading">
-      <app-spinner-loading></app-spinner-loading>
+      <app-spinner-loading class="fade-in-alert"></app-spinner-loading>
     </ng-container>
 
     <!--Show alert request fail-->
     <ng-container>
-      <div *ngIf="isShowAlertFail" class="text-danger fw-bold mb-3">
+      <div *ngIf="isShowAlertFail" class="text-danger fw-bold mb-3 fade-in-alert">
         Generate barcode get error !!!
       </div>
     </ng-container>
 
     <!--Show output result success-->
-    <div class="row text-center" *ngIf="true">
-      <div class="col-12 col-md-7">
-        <div class="output-form mt-3">
-          <div *ngIf="isShowAlertSuccess" class="text-success fw-bold mb-3">
-            Generate successful, your link is:
-          </div>
-          <div *ngIf="true" class="text-success fw-bold mb-3">
-            Generate successful, your link is:
-          </div>
-          <div class="input-group">
-            <input
-              disabled
-              #outputUrl
-              id="output-url"
-              value="Link is hidden"
-              class="form-control"
-              type="text"
-            />
-            <button
-              title="Copy to clipboard"
-              class="btn btn-secondary"
-              (click)="handleCopy($event)"
-            >
-              Copy
-            </button>
-          </div>
-          <div>
+    <ng-container *ngIf="isShowOutput">
+
+      <div class="row text-center fade-in-alert" >
+        <div class="col-12 col-md-7">
+          <div class="output-form mt-3">
+            <div class="text-success fw-bold mb-3">
+              Generate link success!
+            </div>
+            <div class="input-group">
+              <input
+                disabled
+                #outputUrl
+                id="output-url"
+                value="Link is hidden"
+                class="form-control"
+                type="text"
+              />
+              <button
+                title="Copy to clipboard"
+                class="btn btn-secondary"
+                (click)="handleCopy($event)"
+              >
+                Copy
+              </button>
+            </div>
+            <div>
              <span
                #showButton
                class="btn btn-secondary mt-3 mb-4 me-4"
                (click)="handleToggleShowLink($event)"
              >Show</span
              >
-            <span
-              #saveButton
-              class="btn btn-save mt-3 mb-4"
-              (click)="handleSaveBarcode()"
-            >Save</span
-            >
-
+              <span
+                #saveButton
+                class="btn btn-save mt-3 mb-4"
+                (click)="handleSaveBarcode()"
+              >Save</span
+              >
+            </div>
           </div>
         </div>
+        <div class="col-12 col-md-5 align-self-center fw-bold f-14">
+          <p style="color: red">
+            Do not hand over your mobile device to anyone at any time
+          </p>
+          <a href="{{ imgBarcodeUrl }}" download>
+            <img
+              src="{{ imgBarcodeUrl }}"
+              alt="Img barcode"
+              width="240"
+              height="80"
+            />
+          </a>
+
+          <p class="m-0 text-color-secondary">{{ numberBarcode }}</p>
+          <p class="m-0 text-color-primary">{{ price }} £</p>
+        </div>
       </div>
-      <div class="col-12 col-md-5 align-self-center fw-bold f-14">
-        <p style="color: red">
-          Do not hand over your mobile device to anyone at any time
-        </p>
-        <img
-          src="{{ imgBarcodeUrl }}"
-          alt="Img barcode"
-          width="240"
-          height="80"
-        />
-        <p class="m-0 text-color-secondary">{{ numberBarcode }}</p>
-        <p class="m-0 text-color-primary">{{ price }} £</p>
-      </div>
-    </div>
+    </ng-container>
+
 
     <!--Show alert notify save barcode success or fail-->
     <!--Alert success-->

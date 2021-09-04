@@ -1,68 +1,101 @@
-<div class="list-url-container">
-  <!--Show loading spinner-->
-  <ng-container *ngIf="!(barcodes$|async)">
-    <div class="text-center">
-      <app-spinner-loading></app-spinner-loading>
-    </div>
-  </ng-container>
-
-  <!--Url list content-->
-  <div class="list-url box-shadow p-4" *ngIf="(barcodes$ | async) as barcodes">
-    <form class="search-container d-flex" [formGroup]="formSearch" (ngSubmit)="handleSearch()">
-      <input formControlName="keySearch" class="form-control me-2" type="search" placeholder="..." aria-label="Search">
-      <button type="submit" [disabled]="formSearch.invalid" class="btn btn-outline-primary" type="submit">Search</button>
+<div class="list-url-container fade-in-alert">
+    <!--Url list content-->
+  <div class="list-url box-shadow p-5">
+    <form class="search-container d-block d-sm-flex" [formGroup]="formSearch" (ngSubmit)="handleSearch()">
+      <!--Input search keyword-->
+      <input formControlName="keySearch" class="form-control me-2" type="search" placeholder="Type keyword ..."
+             aria-label="Search">
+      <!--Category search-->
+      <div class="category-search">
+        <select formControlName="categorySearch" class="form-select select-search me-2"
+                aria-label="Default select example" (change)="handleOnChangeCategory($event)">
+          <option value="all">All</option>
+          <option value="invoiceNumber">Invoice Number</option>
+          <option value="clientName">Client Name</option>
+          <option value="transactionId">Transaction Id</option>
+          <option value="url">Link barcode</option>
+        </select>
+      </div>
+      <!--Button Search-->
+      <div class="text-center">
+        <button type="submit" [disabled]="formSearch.invalid || formSearch.controls['categorySearch'].value === 'all'"
+                class="ms-2 btn btn-primary btn-disable">
+          Search</button>
+      </div>
     </form>
-    <div class="url-list mt-3 table-responsive">
-      <table class="table table-md table-bordered">
-        <thead>
-        <tr class="bg-color-secondary text-white text-center">
-          <th>Invoice</th>
-          <th>Client</th>
-          <th>Price</th>
-          <th>Link</th>
-          <th>Created Date</th>
-          <th>Date Paid</th>
-          <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <ng-container>
-          <tr *ngFor="let item of barcodes; index as i">
-            <td>{{item?.invoiceNumber}}</td>
-            <td>{{item?.clientName}}</td>
-            <td class="text-center">{{item?.price}}</td>
-            <td><a class="text-decoration-none" href="{{item?.url}}">{{item?.url}}</a></td>
-            <td>{{item?.transactionTime | date: "dd/MM/yyyy"}}</td>
-            <td>{{item?.receivedTime | date: "dd/MM/yyyy"}}</td>
-            <td>{{item?.status}}</td>
-            <!--<td>
-              <button class="btn btn-danger" (click)="deleteItemUrl(item?._id)">Delete</button>
-            </td>-->
-          </tr>
+    <!--Show loading spinner-->
+    <ng-container *ngIf="!(barcodes$|async)">
+      <div class="text-center">
+        <app-spinner-loading></app-spinner-loading>
+      </div>
+    </ng-container>
+
+    <!--Table result-->
+    <ng-container *ngIf="isShowResult">
+      <ng-container *ngIf="(barcodes$ | async) as barcodes">
+        <!--Not found-->
+        <ng-container *ngIf="barcodes.length===0">
+            <p colspan="7" class="mb-4 mt-4 text-center text-danger fade-in-alert">Not found with keyword: "{{keySearch}}" on
+              field
+              "{{categorySearch}}"
+            </p>
         </ng-container>
 
-        </tbody>
+        <div class="url-list mt-3 table-responsive fade-in-alert" *ngIf="barcodes.length>0">
+          <table class="table table-md table-bordered">
+            <thead>
+            <tr class="bg-color-secondary text-white text-center">
+              <th class="w-auto">Invoice</th>
+              <th>Client</th>
+              <th>TransactionID</th>
+              <th>Link</th>
+              <th>Created Date</th>
+              <th>Date Paid</th>
+              <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
 
-      </table>
-      <!--Pagination-->
-      <div class="pagination d-flex justify-content-center">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item">
-              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">Next</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
+            <!--Result-->
+            <ng-container>
+              <tr *ngFor="let item of barcodes; index as i">
+                <td class="w-auto">{{item?.invoiceNumber}}</td>
+                <td>{{item?.clientName|titlecase}}</td>
+                <td >{{item?.transactionId}}</td>
+                <td><a class="" href="{{item?.url}}">{{(item?.url.replace('https://s.mite.pay360.com/a/',''))}}</a></td>
+                <td>{{item?.transactionTime | date: "dd/MM/yyyy"}}</td>
+                <td>{{item?.receivedTime | date: "dd/MM/yyyy"}}</td>
+                <td>{{item?.status}}</td>
+                <!--<td>
+                  <button class="btn btn-danger" (click)="deleteItemUrl(item?._id)">Delete</button>
+                </td>-->
+              </tr>
+            </ng-container>
+
+            </tbody>
+
+          </table>
+          <!--Pagination-->
+          <div class="pagination d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                <li class="page-item">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
 </div>
 

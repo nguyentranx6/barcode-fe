@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from "../api/api.service";
 import {Observable} from "rxjs";
+import {shareReplay} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,6 @@ export class SettingService {
   //Get all setting from database
   getSetting(): Observable<any>{
     let url = `setting`;
-    return  this.apiService.get(url);
+    return  this.apiService.get(url).pipe(shareReplay());
   }
 }

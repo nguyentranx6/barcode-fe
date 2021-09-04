@@ -1,10 +1,21 @@
 <div class="change-pass-setting">
-  <form [formGroup]="changePassSettingForm">
+  <form [formGroup]="changePassSettingForm" class="fade-in-alert">
     <div class="row mb-3">
       <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
-        <div class="mb-3">
+        <div>
           <label for="newPass" class="form-label">New Password</label>
-          <input type="password" class="form-control" id="newPass" formControlName="newPass">
+          <input
+            type="password"
+            class="form-control"
+            id="newPass"
+            formControlName="newPass"
+          />
+          <!--Show notice when user not input same password-->
+          <ng-container *ngIf="isShowErrorNotSamePass">
+          <span class="text-danger small fade-in-alert" role="alert"
+          >* Password not match, please try again !</span
+          >
+          </ng-container>
         </div>
       </div>
     </div>
@@ -12,20 +23,70 @@
     <div class="row mb-3">
       <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
         <div class="mb-3">
-          <label for="newPassRepeat" class="form-label">Repeat New Password</label>
-          <input type="password" class="form-control" id="newPassRepeat" formControlName="newPassRepeat">
+          <label for="newPassRepeat" class="form-label"
+            >Repeat New Password</label
+          >
+          <input
+            type="password"
+            class="form-control"
+            id="newPassRepeat"
+            formControlName="newPassRepeat"
+          />
+          <!--Show notice when user not valid-->
+          <ng-container *ngIf="isShowMinlengthError">
+          <span class="text-danger small fade-in-alert" role="alert"
+          >* Password must be at least 6 characters, please try again !</span
+          >
+          </ng-container>
+        </div>
+        <div *ngIf="!isShowMinlengthError">
+          <p class="text-muted small fst-italic text-end fade-in-alert">* Password must be at least 6 characters</p>
         </div>
       </div>
     </div>
+
+    <!--Show loading spinner-->
+    <ng-container *ngIf="isShowLoading">
+      <div class="mb-3 fade-in-alert">
+        <app-spinner-loading></app-spinner-loading>
+      </div>
+    </ng-container>
+
+    <!--Show alert when submit save-->
+    <!--Save success alert-->
+    <ng-container *ngIf="isShowSuccessAlert">
+      <app-alert-success
+        [message]="'Change password success! Please login again.'"
+      ></app-alert-success>
+    </ng-container>
+
+    <!--Save fail alert-->
+    <ng-container *ngIf="isShowFailAlert">
+      <app-alert-fail [message]="'Save setting fail!'"></app-alert-fail>
+    </ng-container>
 
     <!--Button save-->
-    <div class="row mb-3">
-      <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
-        <div class="text-center mt-3">
-          <button class="btn btn-danger me-3">Cancel</button>
-          <button class="btn btn-primary me-3">Save</button>
+    <ng-container *ngIf="isShowButtonSave">
+      <div class="row mb-3 fade-in-alert">
+        <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+          <div class="text-center mt-3">
+            <button
+              [disabled]="isDisableButtonSave"
+              class="btn btn-danger me-3 btn-disable"
+              (click)="changePassSettingForm.reset()"
+            >
+              Cancel
+            </button>
+            <button
+              [disabled]="isDisableButtonSave"
+              class="btn btn-primary me-3 btn-disable"
+              (click)="handleSavePassword()"
+            >
+              Save
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
   </form>
 </div>

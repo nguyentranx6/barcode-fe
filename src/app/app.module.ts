@@ -28,6 +28,7 @@ import { AlertSuccessComponent } from './home/common/alert/alert-success/alert-s
 import { AlertFailComponent } from './home/common/alert/alert-fail/alert-fail.component';
 import { SpinnerLoadingComponent } from './home/common/spinner/spinner-loading/spinner-loading.component';
 import { ForgotPasswordComponent } from './home/auths/forgot-password/forgot-password.component';
+import { HistoryComponent } from './home/main/history/history.component';
 
 
 
@@ -53,7 +54,8 @@ import { ForgotPasswordComponent } from './home/auths/forgot-password/forgot-pas
     AlertSuccessComponent,
     AlertFailComponent,
     SpinnerLoadingComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    HistoryComponent
   ],
     imports: [
         BrowserModule,

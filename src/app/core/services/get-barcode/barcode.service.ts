@@ -3,7 +3,7 @@ import { configApi } from '../../../shared/constants/config-api';
 import { ApiService } from '../api/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import {delay, shareReplay} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -27,12 +27,6 @@ export class BarcodeService {
     return this.apiService.post(url, data);
   }
 
-  //Get all barcode from database
-  getAllBarcode(): Observable<any> {
-    let url = `barcode/all`;
-    return this.apiService.get(url).pipe(delay(500));
-  }
-
   //Delete barcode
   deleteBarcode(id: string): Observable<any> {
     let url = `barcode?_id=${id}`;
@@ -40,8 +34,8 @@ export class BarcodeService {
   }
 
   //Search barcode
-  searchBarcode(keySearch: string): Observable<any> {
-    let url = `barcode/search?key=${keySearch}`;
-    return this.apiService.get(url);
+  searchBarcode(search: string ='', filter: string ='all', size = 10, page = 1,order = 0): Observable<any> {
+    let url = `barcode/search?key=${search}&filter=${filter}&size=${size}&page=${page}&order=${order}`;
+    return this.apiService.get(url).pipe(shareReplay());
   }
 }

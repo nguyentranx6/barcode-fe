@@ -4,7 +4,12 @@
 
 .content {
   min-height: calc(100vh - 60px - 63px - 10px);
-  width: 90%;
   margin: 0;
   padding: 40px 0 0 0;
+  width: 95%;
+}
+@media (max-width: 576px){
+  .content {
+    padding-top: 50px;
+  }
 }

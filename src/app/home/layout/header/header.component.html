@@ -1,13 +1,57 @@
 <header>
-  <div class="header-container d-block d-md-flex justify-content-between align-items-center">
+  <div
+    class="
+      header-container
+      d-block d-md-flex
+      justify-content-between
+      align-items-center
+    "
+  >
     <div class="brand-name d-none d-md-block">
       <span class="font-sans-serif">Barcode 360 Demo</span>
     </div>
     <div class="header-icon d-flex align-items-center justify-content-end">
-      <fa-icon [icon] = "faBell" class="me-3"></fa-icon>
-      <fa-icon [icon] = "faUserCircle" class="me-4"></fa-icon>
-    </div>
+      <!--Notify icon-->
+      <ng-container>
+        <div class="dropdown-notify">
+          <!--Notify icon-->
+          <ng-container>
+             <span #notifyIcon class="hover-cursor" (click)="handleClickNotify($event)"
+             ><fa-icon [icon]="faBell" class="me-4 icon-hover notify-icon"></fa-icon
+             ></span>
+          </ng-container>
 
+          <!--Notify dropdown content-->
+          <ng-container>
+            <div #notifyDropdown class="dropdown-notify-content">
+              <span routerLink="notification">* 03 new transaction paid</span>
+            </div>
+          </ng-container>
+
+          <!--Notify circle-->
+          <ng-container>
+            <span
+              class="position-absolute notify-badge translate-middle bg-danger border border-light rounded-circle">
+    <span class="visually-hidden">New notify</span>
+  </span>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <!--User icon-->
+      <ng-container>
+        <div class="dropdown-user">
+          <span #userIcon class="hover-cursor" (click)="handleClickUser($event)"
+          ><fa-icon [icon]="faUserCircle" class="me-4 icon-hover user-icon"></fa-icon
+          ></span>
+          <div #userDropdown class="dropdown-user-content">
+            <span routerLink="setting">Setting</span>
+            <span (click)="logout()">Logout</span>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
   </div>
-  <hr style="color: #0000008c" class="m-0">
+  <hr style="color: #0000008c" class="m-0" />
 </header>

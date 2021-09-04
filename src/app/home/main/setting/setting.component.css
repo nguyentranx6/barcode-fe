@@ -1,5 +1,9 @@
 .setting-container {
-
+  border-radius: 8px;
+  width: 70%;
+  padding-top: 20px;
+  margin: auto;
+  padding-bottom: 10px;
 }
 .setting {
   padding: 15px;
@@ -9,4 +13,20 @@
 .nav-link.active {
   border-color:#dee2e6 #dee2e6 #fff !important;
   color: #00a3ff!important;
+}
+.setting-title-sm {
+  display: none;
+}
+
+@media (max-width: 576px){
+
+  .setting-title-sm{
+    display: block;
+  }
+  .setting-menu {
+    display: flex!important;
+    flex-direction: column!important;
+    margin-bottom: 30px;
+  }
+
 }

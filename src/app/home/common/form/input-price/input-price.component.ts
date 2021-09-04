@@ -11,30 +11,34 @@ import { uuidv4 } from '../../../../shared/ultis/ulti';
   styleUrls: ['./input-price.component.css'],
 })
 export class InputPriceComponent implements OnInit {
-  /* State */
-  isShowOutput: boolean = false;
+  //Declaring Global variable
+  public imgBarcodeUrl!: string; // Link url of Image barcode
+  public numberBarcode!: number;
+  public newBarcode!: any; //New barcode add to database;
+  public urlBarcode!: string; // = 'https://s.mite.pay360.com/a/tQ7pv167-8s';
+  public price!: number;
+  public message!: string; //Message to notify
+  public clientName!: string; // Store client name from input
+  public invoiceNumber!: string; // Store invoice number from input
 
-  urlBarcode: string = 'https://s.mite.pay360.com/a/tQ7pv167-8s';
-  price: number = 0;
-  isLoading: boolean = false;
-  imgBarcodeUrl!: string;
-  numberBarcode: number = 0;
-  newBarcode: any = null; //New barcode add to database;
-  isShowAlertFail: boolean = false; //Show notify false generate
-  isShowAlertSuccess: boolean = false;
-  isShowAlertSaveFail: boolean = false; //Show notify false save barcode
-  isShowAlertSaveSuccess: boolean = false;
-  isShowLoadingCheckInvoice: boolean = false; //Show spinner when check invoice
-  isShowExistCheckInvoice: boolean = false; //Show exist notice when check invoice exist
-  isShowErrorCheckInvoice: boolean = false; //Show error when check invoice
-  message!: string; //Message to notify
-  clientName!: string; // Store client name from input
-  invoiceNumber!: string; // Store invoice number from input
+  //Declaring Boolean variable to show or hide template
+  public isShowOutput: boolean = false; // Show or hidden table result
+  public isShowInput: boolean = true; // Show or hidden input
+  public isLoading: boolean = false; // Show spinner loading
+  public isShowAlertFail: boolean = false; //Show notify false generate
+  public isShowAlertSuccess: boolean = false;
+  public isShowAlertSaveFail: boolean = false; //Show notify false save barcode
+  public isShowAlertSaveSuccess: boolean = false;
+  public isShowLoadingCheckInvoice: boolean = false; //Show spinner when check invoice
+  public isShowExistCheckInvoice: boolean = false; //Show exist notice when check invoice exist
+  public isShowErrorCheckInvoice: boolean = false; //Show error when check invoice
+
 
   //Form group
   priceInputForm: FormGroup;
 
-  @ViewChild('outputUrl') outputUrl!: ElementRef; //View child output
+  //View child output
+  @ViewChild('outputUrl') outputUrl!: ElementRef;
   @ViewChild('saveButton') saveButton!: ElementRef;
   @ViewChild('showButton') showButton!: ElementRef;
 
@@ -79,32 +83,6 @@ export class InputPriceComponent implements OnInit {
       );
   }
 
-  //show alert save success
-  showSuccessSaveAlert(status: string = 'show') {
-    if (status === 'show') {
-      this.isShowAlertSaveSuccess = true;
-      this.isShowAlertSaveFail = false;
-    } else if (status === 'off') {
-      this.isShowAlertSaveSuccess = false;
-      this.isShowAlertSaveFail = false;
-    }
-  }
-
-  //Turn off alert save success
-  showFailSaveAlert(status: string = 'show') {
-    if (status === 'show') {
-      console.log('show');
-      this.isShowAlertSaveFail = true;
-      this.isShowAlertSaveSuccess = false;
-      console.log('this.isShowAlertSaveFail', this.isShowAlertSaveFail);
-    } else if (status === 'off') {
-      console.log('off');
-      this.isShowAlertSaveFail = false;
-      this.isShowAlertSaveSuccess = false;
-      console.log('this.isShowAlertSaveFail', this.isShowAlertSaveFail);
-    }
-  }
-
   //create new barcode link
   handleGenerateLink() {
     this.isLoading = true;
@@ -120,14 +98,24 @@ export class InputPriceComponent implements OnInit {
 
       //Check if generate success, show result
       if (status === 'SUCCESS') {
+        //Show or hidden element
         this.isShowAlertSuccess = true;
         this.isShowOutput = true;
+        this.isShowInput = false;
+        //assign data to variable
         this.newBarcode = this.createNewBarcode(val.data);
         this.imgBarcodeUrl = val.img.url;
         this.numberBarcode = val.img.barcode;
         this.urlBarcode = val.data.processing.payCashResponse.barcodeUrl;
+        //Turn off alert notify success
+        setTimeout(()=>{
+          this.isShowAlertSuccess = false;
+          console.log("timeout", )
+        },3000)
       } else {
         this.isShowAlertFail = true;
+        //Turn off alert notify fail
+        setTimeout(()=>this.isShowAlertFail = false,3000)
       }
     });
   }
@@ -152,28 +140,31 @@ export class InputPriceComponent implements OnInit {
 
   //save barcode after generate
   handleSaveBarcode() {
-    this.isShowOutput = false;
+
     this.isLoading = true;
     if (this.newBarcode) {
       this.barcodeService.saveBarcode(this.newBarcode).subscribe(
         (value) => {
           this.isLoading = false;
-
           let status = value.status;
           if (status === 'success') {
-            this.showSuccessSaveAlert();
-            setTimeout(() => {
-              this.showSuccessSaveAlert('off');
-            }, 5000);
+            this.isShowOutput = false;
+            this.isShowAlertSaveSuccess = true;
+            this.isShowAlertSaveFail = false;
+            setTimeout(()=>{
+              this.isShowInput = true;
+              this.isShowAlertSaveSuccess = false;
+            },3000)
           }
         },
         (error) => {
           this.isLoading = false;
-          this.showFailSaveAlert();
-          console.log('error');
-          setTimeout(() => {
-            this.showFailSaveAlert('off');
-          }, 5000);
+          this.isShowAlertSaveSuccess = false;
+          this.isShowAlertSaveFail = true;
+          setTimeout(()=>{
+            this.isShowInput = true;
+            this.isShowAlertSaveFail = false;
+          },3000)
         }
       );
     }

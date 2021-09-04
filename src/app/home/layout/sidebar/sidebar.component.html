@@ -1,20 +1,44 @@
 <div class="sidebar">
   <div class="logo text-center pt-2 ps-0 ps-md-3">
-    <img routerLink="/" src="assets/img/logo.png" alt="logo" width="50px" height="50px">
+    <img
+      routerLink="/"
+      src="assets/img/logo.png"
+      alt="logo"
+      width="50px"
+      height="50px"
+    />
   </div>
   <div class="nav-bar">
     <ul class="nav-menu text-sidebar">
       <!--<li routerLink="/" routerLinkActive="active" class="nav-item"><fa-icon [icon]="faHome"></fa-icon>Home</li>-->
-      <li routerLink="generate-barcode" routerLinkActive="active" class="nav-item"><fa-icon [icon]="faLink"></fa-icon>
-        <span class="d-none d-md-inline-block">Generate Code</span></li>
-      <li routerLink="list" routerLinkActive="active" class="nav-item"><fa-icon [icon]="faList"></fa-icon><span class="d-none d-md-inline-block">
-        List Barcode</span>
-        </li>
-      <li routerLink="notification" routerLinkActive="active" class="nav-item"><fa-icon
-        [icon]="faBell"></fa-icon>
-        <span class="d-none d-md-inline-block">Notifications</span></li>
-      <li routerLink="setting" routerLinkActive="active"
-          class="nav-item"><fa-icon [icon]="faSetting"></fa-icon><span class="d-none d-md-inline-block">Setting</span></li>
+      <li
+        routerLink="./generate-barcode"
+        routerLinkActive="active"
+        class="nav-item"
+      >
+        <fa-icon [icon]="faLink"></fa-icon>
+        <span class="d-none d-md-inline-block">Generate Code</span>
+      </li>
+
+      <li routerLink="./list" routerLinkActive="active" class="nav-item">
+        <fa-icon [icon]="faList"></fa-icon
+        ><span class="d-none d-md-inline-block"> List Barcode</span>
+      </li>
+
+      <li routerLink="./notification" routerLinkActive="active" class="nav-item">
+        <fa-icon [icon]="faBell"></fa-icon>
+        <span class="d-none d-md-inline-block">Notifications</span>
+      </li>
+
+      <li routerLink="./history" routerLinkActive="active" class="nav-item">
+        <fa-icon [icon]="faHistory"></fa-icon>
+        <span class="d-none d-md-inline-block">History</span>
+      </li>
+
+      <li routerLink="setting" routerLinkActive="active" class="nav-item">
+        <fa-icon [icon]="faSetting"></fa-icon
+        ><span class="d-none d-md-inline-block">Setting</span>
+      </li>
     </ul>
   </div>
 </div>
