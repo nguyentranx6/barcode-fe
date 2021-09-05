@@ -18,7 +18,6 @@ export class AuthService {
     this.initCurrentUser();
     this.isLoggedIn$ = this.currentUser$.pipe(map((user) => !!user));
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map((user) => !user));
-    console.log("auth api",)
   }
 
   getAuthorizationToken() {
