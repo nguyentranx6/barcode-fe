@@ -1,0 +1,11 @@
+.barcode-dialog {
+  padding: 12px 12px 5px 12px;
+}
+
+table th,td {
+  padding: 3px 5px;
+}
+
+a:focus {
+  outline: none;
+}

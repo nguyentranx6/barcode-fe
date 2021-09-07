@@ -1,0 +1,66 @@
+<div class="barcode-dialog">
+  <div class="fade-in-alert">
+    <div class="content bg-color-primary">
+      <table class="table table-bordered table-responsive">
+        <tbody>
+        <tr>
+          <th scope="row">Client Name:</th>
+          <td>{{barcodeInfo?.client.clientName| titlecase}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Client ID:</th>
+          <td>{{barcodeInfo?.client.customClientId| uppercase}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Email:</th>
+          <td>{{barcodeInfo?.client.email}}</td>
+        </tr>
+        <tr>
+          <th scope="row">InvoiceNumber</th>
+          <td>{{barcodeInfo?.invoiceNumber | uppercase}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Price</th>
+          <td>{{barcodeInfo?.price}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Transaction Id:</th>
+          <td>{{barcodeInfo?.transactionId}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Related Transaction Id:</th>
+          <td>{{barcodeInfo?.relatedTransaction}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Status:</th>
+          <td class="fw-bold"
+              [ngClass]="{'text-success': barcodeInfo?.status ==='paid',
+              'text-danger': barcodeInfo?.status ==='pending'}">{{barcodeInfo?.status| titlecase}}</td>
+        </tr>
+        <tr>
+          <th scope="row">url</th>
+          <td><a href="{{barcodeInfo?.url}}" target="_blank">{{barcodeInfo?.url}}</a></td>
+        </tr>
+        <tr>
+          <th scope="row">Transaction Time</th>
+          <td>{{barcodeInfo?.transactionTime | date: "dd/MM/yyyy"}}</td>
+        </tr>
+        <tr>
+          <th scope="row">ReceivedTime:</th>
+          <td>
+            <span
+              *ngIf="barcodeInfo?.receivedTime; else spendingStatus">{{barcodeInfo?.receivedTime | date: "dd/MM/yyyy"}}</span>
+            <ng-template #spendingStatus>
+              <span class="">-</span>
+            </ng-template>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+  <div class="text-center">
+    <button type="button" class="btn btn-primary" (click)="handleCloseButton()">Close</button>
+  </div>
+</div>
