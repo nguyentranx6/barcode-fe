@@ -1,5 +1,5 @@
 <div class="sidebar">
-  <div class="logo text-center pt-2 ps-0 ps-md-3">
+  <div class="logo text-center pt-2 ps-0">
     <img
       routerLink="/"
       src="assets/img/logo.png"
@@ -23,6 +23,11 @@
       <li routerLink="./list" routerLinkActive="active" class="nav-item">
         <fa-icon [icon]="faList"></fa-icon
         ><span class="d-none d-md-inline-block"> List Barcode</span>
+      </li>
+
+      <li routerLink="./clients" routerLinkActive="active" class="nav-item">
+        <fa-icon [icon]="faAddressBook"></fa-icon>
+        <span class="d-none d-md-inline-block">Clients</span>
       </li>
 
       <li routerLink="./notification" routerLinkActive="active" class="nav-item">

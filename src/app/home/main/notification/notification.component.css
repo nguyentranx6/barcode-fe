@@ -1,0 +1,10 @@
+.modal-info-alert {
+  max-width: max-content!important;
+}
+
+
+@media (max-width: 576px) {
+  .modal-info-alert {
+    max-width: fit-content;
+  }
+}

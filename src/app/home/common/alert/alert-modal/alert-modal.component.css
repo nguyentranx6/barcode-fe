@@ -1,15 +1,19 @@
-/* Alert modal css*/
-.modal-alert {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.content {
+  padding:30px 30px 20px 30px;
 }
-.alert-content {
-  background-color: lightgreen;
-  padding: 50px;
-  border-radius: 8px;
+
+
+table tr, td, th {
+  padding: 5px 12px;
+  margin: 0;
+}
+table tr {
+  padding: 10px 5px;
+}
+
+@media (max-width: 576px) {
+  table td{
+    max-width: 210px;
+    word-wrap: break-word;
+  }
 }

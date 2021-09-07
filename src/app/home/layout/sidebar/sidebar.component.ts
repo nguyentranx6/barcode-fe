@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {faDashcube, faUncharted} from "@fortawesome/free-brands-svg-icons";
-import {faChartBar, faHome, faList, faCog, faTasks,faLink, faHistory} from "@fortawesome/free-solid-svg-icons";
+import {faChartBar, faHome, faList, faCog, faTasks,faLink, faHistory, faAddressBook} from "@fortawesome/free-solid-svg-icons";
 import {faChartBar as faReChartBar, faBell} from "@fortawesome/free-regular-svg-icons";
 
 @Component({
@@ -11,7 +11,7 @@ import {faChartBar as faReChartBar, faBell} from "@fortawesome/free-regular-svg-
 export class SidebarComponent implements OnInit {
   //Icon
   public faDash = faReChartBar;
-  public faHome = faHome;
+  public faAddressBook = faAddressBook;
   public faLink = faLink;
   public faSetting = faCog;
   public faBell = faBell;

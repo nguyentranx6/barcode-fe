@@ -2,10 +2,10 @@
   <div class="input-content mx-auto border-0">
     <!--Input form-->
     <div class="input-form fade-in-alert" *ngIf="isShowInput">
-      <form action="#" class="" [formGroup]="priceInputForm">
+      <form action="#" class="" [formGroup]="priceInputForm" autocomplete="off">
         <!--Client Name Input-->
-        <div class="row mb-3">
-          <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+        <div class="row mb-3 ">
+          <div class="col-12 col-sm-8 mx-auto">
             <ng-container class="mb-3">
               <label class="form-label" for="clientName">Client Name</label>
               <input
@@ -13,15 +13,55 @@
                 type="text"
                 class="form-control"
                 id="clientName"
-                name="price"
+                name="clientName"
               />
             </ng-container>
           </div>
         </div>
-        <!--Invoice number Input-->
         <div class="row mb-3">
-          <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
-            <div class="mb-3 position-relative">
+          <!--Client Email Input-->
+          <div class="col-12 col-sm-8 mx-auto">
+            <ng-container class="mb-3">
+              <label class="form-label" for="email">Client Email</label>
+              <input
+                formControlName="email"
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+              />
+              <!--Show notice when user not input email-->
+              <ng-container
+                *ngIf="
+                !priceInputForm.controls['email'].valid &&
+                priceInputForm.controls['email'].touched
+              "
+              >
+                <p class="text-danger mt-2 mb-0 p-0" role="alert">
+                  * Please enter correct email !
+                </p>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <!--Client ID Input-->
+          <div class="col-12 col-sm-8 mx-auto">
+            <ng-container class="mb-3">
+              <label class="form-label" for="customClientId">Client ID</label>
+              <input
+                formControlName="customClientId"
+                type="text"
+                class="form-control"
+                id="customClientId"
+                name="customClientId"
+              />
+            </ng-container>
+          </div>
+        </div>
+        <div class="row mb-3"> <!--Invoice number Input-->
+          <div class="col-12 col-sm-8 mx-auto">
+            <div class=" position-relative">
               <label class="form-label" for="invoiceNumber"
               >Invoice Number</label
               >
@@ -30,7 +70,7 @@
                 type="text"
                 class="form-control"
                 id="invoiceNumber"
-                name="price"
+                name="invoiceNumber"
               />
 
               <!--Show loading spinner check invoice-->
@@ -58,11 +98,9 @@
             <ng-container *ngIf="isShowErrorCheckInvoice">
               <p class="text-danger mb-0" role="alert">* Serve get error !</p>
             </ng-container>
-          </div>
-        </div>
-        <!--Price Input-->
-        <div class="row mb-3">
-          <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10">
+          </div></div>
+        <div class="row mb-3"><!--Price Input-->
+          <div class="col-12 col-sm-8 mx-auto">
             <ng-container class="mb-3">
               <label class="form-label" for="price">Price</label>
               <input
@@ -73,41 +111,44 @@
                 name="price"
               />
             </ng-container>
-          </div>
-        </div>
+          </div></div>
+
+
+
         <!--Button-->
-        <div class="row mb-3 mt-2">
-          <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10 text-center">
-            <ng-container class="mb-3">
-              <button
-                [disabled]="priceInputForm.invalid"
-                type="button"
-                class="btn btn-primary btn-disable"
-                (click)="handleGenerateLink()"
-              >
-                Generate
-              </button>
-            </ng-container>
+        <ng-container *ngIf="isShowButtonGenerate">
+          <div class="row mb-3 mt-2">
+            <div class="mx-auto col-12 col-md-8 col-lg-7 col-sm-10 text-center">
+              <ng-container class="mb-3">
+                <button
+                  [disabled]="priceInputForm.invalid"
+                  type="button"
+                  class="btn btn-primary btn-disable"
+                  (click)="handleGenerateLink()"
+                >
+                  Generate
+                </button>
+              </ng-container>
+            </div>
           </div>
-        </div>
+        </ng-container>
+        <!--Show loading spinner-->
+        <ng-container *ngIf="isLoading">
+          <app-spinner-loading class="fade-in-alert"></app-spinner-loading>
+        </ng-container>
+
+        <!--Show alert request fail-->
+        <ng-container>
+          <div *ngIf="isShowAlertFail" class="text-danger fw-bold mb-3 fade-in-alert">
+            Generate barcode get error !!!
+          </div>
+        </ng-container>
       </form>
     </div>
 
-    <!--Show loading spinner-->
-    <ng-container *ngIf="isLoading">
-      <app-spinner-loading class="fade-in-alert"></app-spinner-loading>
-    </ng-container>
-
-    <!--Show alert request fail-->
-    <ng-container>
-      <div *ngIf="isShowAlertFail" class="text-danger fw-bold mb-3 fade-in-alert">
-        Generate barcode get error !!!
-      </div>
-    </ng-container>
 
     <!--Show output result success-->
     <ng-container *ngIf="isShowOutput">
-
       <div class="row text-center fade-in-alert" >
         <div class="col-12 col-md-7">
           <div class="output-form mt-3">
@@ -138,12 +179,6 @@
                (click)="handleToggleShowLink($event)"
              >Show</span
              >
-              <span
-                #saveButton
-                class="btn btn-save mt-3 mb-4"
-                (click)="handleSaveBarcode()"
-              >Save</span
-              >
             </div>
           </div>
         </div>
@@ -151,7 +186,7 @@
           <p style="color: red">
             Do not hand over your mobile device to anyone at any time
           </p>
-          <a href="{{ imgBarcodeUrl }}" download>
+          <a href="{{ imgBarcodeUrl }}">
             <img
               src="{{ imgBarcodeUrl }}"
               alt="Img barcode"
@@ -160,22 +195,11 @@
             />
           </a>
 
-          <p class="m-0 text-color-secondary">{{ numberBarcode }}</p>
+          <p class="m-0 text-color-secondary">{{ barcodeNumber }}</p>
           <p class="m-0 text-color-primary">{{ price }} £</p>
         </div>
       </div>
     </ng-container>
 
-
-    <!--Show alert notify save barcode success or fail-->
-    <!--Alert success-->
-    <ng-container *ngIf="isShowAlertSaveSuccess">
-      <app-alert-success [message]="'Save success!'"></app-alert-success>
-    </ng-container>
-
-    <!--Alert fail-->
-    <ng-container *ngIf="isShowAlertFail">
-      <app-alert-fail [message]="'Save failed!!!'"></app-alert-fail>
-    </ng-container>
   </div>
 </div>

@@ -19,21 +19,21 @@
              <span #notifyIcon class="hover-cursor" (click)="handleClickNotify($event)"
              ><fa-icon [icon]="faBell" class="me-4 icon-hover notify-icon"></fa-icon
              ></span>
-          </ng-container>
 
-          <!--Notify dropdown content-->
-          <ng-container>
-            <div #notifyDropdown class="dropdown-notify-content">
-              <span routerLink="notification">* 03 new transaction paid</span>
-            </div>
-          </ng-container>
-
-          <!--Notify circle-->
-          <ng-container>
-            <span
-              class="position-absolute notify-badge translate-middle bg-danger border border-light rounded-circle">
-    <span class="visually-hidden">New notify</span>
-  </span>
+            <!--Notify balloon -->
+            <ng-container *ngIf="(newNotify$|async) as newNotify">
+              <!--Notify circle-->
+              <ng-container *ngIf="newNotify.length>0">
+                <span class="badge-notify">{{newNotify.length}}</span>
+              </ng-container>
+              <!--Notify dropdown content-->
+              <ng-container>
+                <div #notifyDropdown class="dropdown-notify-content">
+                  <span routerLink="notification">* {{newNotify.length>0 ? newNotify.length: 0}} new transaction
+                    paid</span>
+                </div>
+              </ng-container>
+            </ng-container>
           </ng-container>
         </div>
       </ng-container>

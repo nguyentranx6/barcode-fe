@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {API} from "../../../../../config";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
- private BASE_URL = "http://165.227.236.153:3300/api";
-// private BASE_URL = "http://localhost:3300/api";
+ private BASE_URL = API;
 
   constructor(private http: HttpClient) {
   }

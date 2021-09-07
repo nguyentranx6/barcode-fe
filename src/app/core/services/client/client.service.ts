@@ -19,6 +19,8 @@ export class ClientService {
     order = 0
   ): Observable<any> {
     let url = `client/search?key=${search}&get=${get}&filter=${filter}&size=${size}&page=${page}&order=${order}`;
+    console.log("size", size);
+    console.log("page", page);
     return this.apiService.get(url).pipe(shareReplay());
   }
 }

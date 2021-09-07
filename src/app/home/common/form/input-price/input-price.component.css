@@ -1,9 +1,9 @@
 /* Input price CSS */
 .input-container {
   border-radius: 8px;
-  padding: 50px 20px;
-  width: 90%;
+  padding: 30px 20px;
   margin: 0 auto;
+  width: 60%;
 }
 .input-content {
  /*// background-color: #eeb4cf;*/
@@ -65,7 +65,6 @@ input.after-copy {
     width: 100%;
   }
   .spinner-check-invoice {
-
     top: 40px;
     right: 20px;
   }

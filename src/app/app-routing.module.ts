@@ -12,6 +12,7 @@ import {NotificationComponent} from "./home/main/notification/notification.compo
 import {AdminGuard} from "./core/guard/admin.guard";
 import {AlertSuccessComponent} from "./home/common/alert/alert-success/alert-success.component";
 import {HistoryComponent} from "./home/main/history/history.component";
+import {ClientComponent} from "./home/main/client/client.component";
 
 const routes = [
   {
@@ -44,6 +45,10 @@ const routes = [
       {
         path: 'setting',
         component: SettingComponent
+      },
+      {
+        path: 'clients',
+        component: ClientComponent
       },
       {
         path: 'generate-barcode',

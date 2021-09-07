@@ -1,23 +1,28 @@
-<div class="notification fade-in-alert">
+<div class="notification fade-in-alert" *ngIf="allNotify$|async as allNotify">
   <div class="notify-content">
-    <div class="alert alert-success" role="alert">
-      Transaction ID 9384983883 success !
-    </div>
-    <div class="alert alert-success" role="alert">
-      Transaction ID 9384983883 success !
-    </div>
-    <div class="alert alert-danger" role="alert">
-      Transaction ID 9384983883 fail !
-    </div>
-    <div class="alert alert-success" role="alert">
-      Transaction ID 9334983843 success !
-    </div>
-    <div class="alert alert-success" role="alert">
-      Transaction ID 63846983823 success !
-    </div>
-    <div class="alert alert-danger" role="alert">
-      Transaction ID 9384983883 fail !
-    </div>
+    <ng-container *ngFor="let item of allNotify">
+      <div data-bs-toggle="modal" data-bs-target="#modal" (click)="handleClick($event)">
+        <div class="alert hover-cursor" [ngClass]="{'alert-success': item.status==='unread','alert-secondary':
+        item.status==='read'}"
+             role="alert"
+             id="{{item.barcodeId}}"
+             [attr.data-notify-id]="item?.barcodeId">
+          Barcode with number {{item?.barcodeNumber|| "xxx-xxx-xxx-xxx"}} is paid !
+        </div>
+      </div>
+    </ng-container>
   </div>
+
+  <!--Modal show info-->
+  <ng-container>
+    <div class="modal fade-in-alert" id="modal" #alertModal>
+      <div class="modal-dialog modal-info-alert">
+        <div class="modal-content">
+          <app-alert-modal [idNotify$]="idNotify$"></app-alert-modal>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
 
 </div>

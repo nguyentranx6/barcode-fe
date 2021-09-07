@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 .header-container {
-  height: 60px;
+  height: 70px;
 
 }
 .header-icon {
@@ -62,6 +62,7 @@
   padding: 15px 10px;
   width: 230px;
   text-align: center;
+  color: red;
 }
 .dropdown-notify-content span:hover {
   font-weight: 500;
@@ -69,12 +70,21 @@
 .show {display:block;}
 
 /* notify-badge */
-.notify-badge {
-  top: 10%;
-  left: 40%;
-  padding: 4px;
+
+.badge-notify {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  padding: 2px 9px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+  font-size: 13px;
 }
 @media (max-width: 576px){
+  .header-container {
+    height: 80px;
+  }
   .dropdown-notify-content {
     left: -115px;
   }

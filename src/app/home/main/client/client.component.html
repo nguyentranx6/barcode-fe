@@ -1,1 +1,146 @@
-<p>client works!</p>
+<div class="list-url-container fade-in-alert">
+  <!--Url list content-->
+  <div class="list-url box-shadow p-5">
+    <form
+      class="search-container d-block d-sm-flex"
+      [formGroup]="formSearch"
+      (ngSubmit)="handleSearch()"
+    >
+      <!--Input search keyword-->
+      <input
+        formControlName="keySearch"
+        class="form-control me-2"
+        type="search"
+        placeholder="Type keyword ..."
+        aria-label="Search"
+      />
+      <!--Category search-->
+      <div class="category-search">
+        <select
+          formControlName="categorySearch"
+          class="form-select select-search me-2"
+          aria-label="Default select example"
+          (change)="handleOnChangeCategory($event)"
+        >
+          <option value="all">All</option>
+          <option value="email">Email</option>
+          <option value="clientName">Name</option>
+          <option value="customClientId">Client Id</option>
+        </select>
+      </div>
+      <!--Button Search-->
+      <div class="text-center">
+        <button
+          type="submit"
+          [disabled]="
+            formSearch.invalid ||
+            formSearch.controls['categorySearch'].value === 'all'
+          "
+          class="ms-2 btn btn-primary btn-disable"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+
+
+    <!--Show error if search fail-->
+    <ng-container *ngIf="isShowErrorSearch">
+      <app-alert-fail [message]="'Search get error from server'"></app-alert-fail>
+    </ng-container>
+
+    <!--Show error if get data fail-->
+    <ng-container *ngIf="isShowAlertRequestFail">
+      <app-alert-fail [message]="'Request data get error from server'"></app-alert-fail>
+    </ng-container>
+
+    <!--Table material-->
+    <div class="bg-color-primary mt-4 table-content">
+      <table
+        class="fade-in-alert"
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+      >
+        <!-- customClientId Column -->
+        <ng-container matColumnDef="customClientId">
+          <th
+            class="fade-in-alert"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Client Id
+          </th>
+          <td class="fade-in-alert" mat-cell *matCellDef="let row">
+            <span class="mobile-label">Client Id:</span>
+            <span>{{ row.customClientId | uppercase }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Client name Column -->
+        <ng-container matColumnDef="clientName">
+          <th
+            class="fade-in-alert"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Client Name
+          </th>
+          <td class="fade-in-alert" mat-cell *matCellDef="let row">
+            <span class="mobile-label client-name">clientName:</span>
+            <span>{{ row.clientName | titlecase }}</span>
+          </td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="email">
+          <th
+            class="fade-in-alert"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Email
+          </th>
+          <td class="fade-in-alert" mat-cell *matCellDef="let row">
+            <span class="mobile-label">Email:</span>
+            <span>{{ row.email }}</span>
+          </td>
+        </ng-container>
+
+        <tr
+          class="fade-in-alert fw-600 text-color-primary"
+          mat-header-row
+          *matHeaderRowDef="displayedColumns"
+        ></tr>
+        <tr
+          class="fade-in-alert hover-cursor hover-row-effect"
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="routerContractDetail(row)"
+        ></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell text-danger text-center" colspan="6" *ngIf="!isShowLoading">No data</td>
+        </tr>
+      </table>
+      <mat-paginator
+        showFirstLastButtons
+        [length]="length"
+        [pageSizeOptions]="[10, 25, 50, 100]"
+      ></mat-paginator>
+      <!--Show loading spinner-->
+      <ng-container *ngIf="isShowLoading">
+        <div class="spinner-container">
+          <app-spinner-loading></app-spinner-loading>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+
+

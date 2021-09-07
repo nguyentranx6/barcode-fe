@@ -1,5 +1,65 @@
-<div class="modal-alert">
-  <div class="spinner-border text-primary mt-4 mb-4" role="status">
-    <span class="visually-hidden mx-auto">Loading...</span>
+<div class="w-100 box-shadow fade-in-alert" *ngIf="notifyInfo$|async as notifyInfo">
+  <div class="content bg-color-primary">
+    <table class="table table-bordered table-responsive">
+      <tbody>
+      <tr>
+        <th scope="row">Client Name:</th>
+        <td>{{notifyInfo?.clientName| titlecase}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Client ID:</th>
+        <td>{{notifyInfo?.clientId| titlecase}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Email:</th>
+        <td>{{notifyInfo?.email}}</td>
+      </tr>
+      <tr>
+        <th scope="row">InvoiceNumber</th>
+        <td>{{notifyInfo?.invoiceNumber}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Price</th>
+        <td>{{notifyInfo?.price}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Transaction Id:</th>
+        <td>{{notifyInfo?.transactionId}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Related Transaction Id:</th>
+        <td>{{notifyInfo?.relatedTransaction}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Status:</th>
+        <td class="fw-bold"
+          [ngClass]="{'text-success': notifyInfo?.status ==='paid', 'text-danger': notifyInfo?.status ==='pending'}">{{notifyInfo?.status}}</td>
+      </tr>
+      <tr>
+        <th scope="row">url</th>
+        <td><a href="{{notifyInfo?.url}}">{{notifyInfo?.url}}</a></td>
+      </tr>
+      <tr>
+        <th scope="row">Transaction Time</th>
+        <td>{{notifyInfo?.transactionTime | date: "dd/MM/yyyy"}}</td>
+      </tr>
+      <tr>
+        <th scope="row">ReceivedTime:</th>
+        <td>
+          <span *ngIf="notifyInfo?.receivedTime; else spendingStatus">{{notifyInfo?.receivedTime | date: "dd/MM/yyyy"}}</span>
+          <ng-template #spendingStatus>
+            <span class="fw-bold text-danger">Not yet paid</span>
+          </ng-template>
+
+
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+    <div class="text-center">
+      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+    </div>
+
   </div>
 </div>

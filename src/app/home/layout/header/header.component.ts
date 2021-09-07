@@ -11,6 +11,8 @@ import {
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import {NotifyStore} from "../../../core/stores/notify.store";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -23,7 +25,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   public faUserCircle = faUserCircle;
 
   //Declare variable boolean to show or hide
-  public isShowIconNotify: boolean = false;
+  public isShowIconNotify: boolean = false; // Show notify when new barcode paid
+
+  //Store notify get from sever
+  public newNotify$!: Observable<any>; // new notify
 
   //Dom to icon
   @ViewChild('userIcon') userIcon!: ElementRef;
@@ -31,14 +36,20 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   @ViewChild('notifyIcon') notifyIcon!: ElementRef;
   @ViewChild('notifyDropdown') notifyDropdown!: ElementRef;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private notifyStore: NotifyStore) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getNotify();
+  }
 
   ngAfterViewInit() {
     this.hiddenUserDropdown();
     this.hiddenNotifyDropdown();
+  }
 
+  //Get notify data from store
+  getNotify(){
+    this.newNotify$ = this.notifyStore.allNewNotify$;
   }
 
   //Show menu when click user icon
@@ -56,7 +67,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     evt.stopPropagation();
     this.notifyDropdown.nativeElement.classList.toggle('show');
     this.userDropdown.nativeElement.classList.remove('show');
-
   }
 
   //Hidden user dropdown
@@ -97,9 +107,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   //Handle logout
   logout() {
     this.authService.logout();
   }
+
 }

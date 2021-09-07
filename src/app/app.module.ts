@@ -29,6 +29,13 @@ import { AlertFailComponent } from './home/common/alert/alert-fail/alert-fail.co
 import { SpinnerLoadingComponent } from './home/common/spinner/spinner-loading/spinner-loading.component';
 import { ForgotPasswordComponent } from './home/auths/forgot-password/forgot-password.component';
 import { HistoryComponent } from './home/main/history/history.component';
+import { ClientComponent } from './home/main/client/client.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MaterialModule} from "./shared/meterial/meterial/material.module";
+import {MatSortModule} from "@angular/material/sort";
+import { BarcodeDialogComponent } from './home/common/dialog/barcode-dialog/barcode-dialog.component';
+import { ClientDialogComponent } from './home/common/dialog/client-dialog/client-dialog.component';
+
 
 
 
@@ -55,22 +62,30 @@ import { HistoryComponent } from './home/main/history/history.component';
     AlertFailComponent,
     SpinnerLoadingComponent,
     ForgotPasswordComponent,
-    HistoryComponent
+    HistoryComponent,
+    ClientComponent,
+    BarcodeDialogComponent,
+    ClientDialogComponent,
   ],
-    imports: [
-        BrowserModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        FontAwesomeModule,
-        RouterModule,
-    ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorInterceptor,
-    multi: true,
-  },],
-  bootstrap: [AppComponent]
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    FontAwesomeModule,
+    RouterModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    MatSortModule,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
