@@ -20,11 +20,11 @@ html {
   -moz-box-sizing: inherit;
   box-sizing: inherit;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 body {
   background-color: #EDF2F9;
-  width: 100vw;
-  height: 100vh;
 }
 /* Set global text color and background color*/
 .text-color-primary {
@@ -79,6 +79,11 @@ body {
   filter: brightness(120%);
 }
 
+/* Text justify */
+.text-justify {
+  text-align: justify;
+}
+
 /* Fade in, Fade out effect */
 .fade-in-alert {
   animation: fadeIn 0.5s ease-in-out 0s 1;
@@ -102,5 +107,8 @@ body {
   border: none;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mat-dialog-container {
+  padding: 0!important;
+}

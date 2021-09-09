@@ -13,6 +13,7 @@ import {AdminGuard} from "./core/guard/admin.guard";
 import {AlertSuccessComponent} from "./home/common/alert/alert-success/alert-success.component";
 import {HistoryComponent} from "./home/main/history/history.component";
 import {ClientComponent} from "./home/main/client/client.component";
+import {BarcodeLinkComponent} from "./home/main/barcode-link/barcode-link.component";
 
 const routes = [
   {
@@ -59,6 +60,10 @@ const routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'payment',
+    component: BarcodeLinkComponent
   },
   {
     path: '**',

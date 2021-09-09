@@ -61,17 +61,63 @@ table {
     width: 100%;
     margin: 10px auto;
   }
-  table {
-    color: red;
-  }
-  .ist-url {
-    padding: 0;
-  }
+
+
   .mobile-label {
     width: 80px;
     display: inline-block;
     font-weight: bold;
   }
+
+  .mat-header-row {
+    display: none;
+  }
+
+  td {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+  }
+
+  th.mat-header-cell:first-of-type,
+  td.mat-cell:first-of-type,
+  td.mat-footer-cell:first-of-type {
+    padding-left: 0;
+  }
+  th.mat-header-cell:last-of-type,
+  td.mat-cell:last-of-type,
+  td.mat-footer-cell:last-of-type {
+    padding-right: 0;
+  }
+  td span {
+    width: 100%;
+    flex: 50%;
+    padding: 5px 8px;
+  }
+  tr {
+    border-bottom: 1px solid var(--text-color-primay);
+    border-top: 1px solid var(--text-color-primay);
+  }
+  ::ng-deep .mat-paginator .mat-paginator-container {
+    justify-content: center!important;
+    flex-direction: row-reverse;
+  }
+
+  ::ng-deep .mat-paginator .mat-paginator-range-actions {
+    display: block!important;
+    order: 1;
+  }
+  ::ng-deep .mat-paginator .mat-paginator-range-label {
+    margin: 10px auto;
+    text-align: center;
+  }
+  ::ng-deep .mat-paginator .mat-paginator-page-size {
+    order: 2;
+  } .mobile-label {
+      width: 80px;
+      display: inline-block;
+      font-weight: bold;
+    }
 
   .mat-header-row {
     display: none;

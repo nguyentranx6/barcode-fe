@@ -1,18 +1,19 @@
-<div class="barcode-dialog">
+<div class="barcode-dialog bg-color-primary text-color-secondary">
+  <!--Infomation of barcode-->
   <div class="fade-in-alert">
-    <div class="content bg-color-primary">
-      <table class="table table-bordered table-responsive">
+    <div class="content ">
+      <table class="table table-bordered">
         <tbody>
         <tr>
-          <th scope="row">Client Name:</th>
-          <td>{{barcodeInfo?.client.clientName| titlecase}}</td>
+          <th scope="row">Client Name</th>
+          <td class="fw-600">{{barcodeInfo?.client.clientName| titlecase}}</td>
         </tr>
         <tr>
-          <th scope="row">Client ID:</th>
-          <td>{{barcodeInfo?.client.customClientId| uppercase}}</td>
+          <th scope="row">Client ID</th>
+          <td >{{barcodeInfo?.client.customClientId| uppercase}}</td>
         </tr>
         <tr>
-          <th scope="row">Email:</th>
+          <th scope="row">Email</th>
           <td>{{barcodeInfo?.client.email}}</td>
         </tr>
         <tr>
@@ -21,46 +22,122 @@
         </tr>
         <tr>
           <th scope="row">Price</th>
-          <td>{{barcodeInfo?.price}}</td>
+          <td>
+            <ng-container *ngIf="!isShowInputForm">
+              {{barcodeInfo?.price|currency:"GBP"}}
+            </ng-container>
+
+            <ng-container *ngIf="isShowInputForm">
+              <form [formGroup]="priceAddBarcodeForm">
+                <input
+                  formControlName="price"
+                  type="number"
+                  class="form-control"
+                  id="price"
+                  name="price"
+                  #price
+                />
+              </form>
+            </ng-container>
+          </td>
         </tr>
         <tr>
-          <th scope="row">Transaction Id:</th>
+          <th scope="row">Transaction ID</th>
           <td>{{barcodeInfo?.transactionId}}</td>
         </tr>
         <tr>
-          <th scope="row">Related Transaction Id:</th>
-          <td>{{barcodeInfo?.relatedTransaction}}</td>
+          <th scope="row">Barcode Number</th>
+          <td>{{barcodeInfo?.barcodeNumber}}</td>
         </tr>
         <tr>
-          <th scope="row">Status:</th>
+          <th scope="row">Status</th>
           <td class="fw-bold"
               [ngClass]="{'text-success': barcodeInfo?.status ==='paid',
               'text-danger': barcodeInfo?.status ==='pending'}">{{barcodeInfo?.status| titlecase}}</td>
         </tr>
-        <tr>
-          <th scope="row">url</th>
-          <td><a href="{{barcodeInfo?.url}}" target="_blank">{{barcodeInfo?.url}}</a></td>
-        </tr>
-        <tr>
-          <th scope="row">Transaction Time</th>
-          <td>{{barcodeInfo?.transactionTime | date: "dd/MM/yyyy"}}</td>
-        </tr>
-        <tr>
-          <th scope="row">ReceivedTime:</th>
-          <td>
+
+        <!--Time of barcode-->
+        <ng-container>
+          <tr>
+            <th scope="row">Transaction Time</th>
+            <td>{{barcodeInfo?.transactionTime | date: "dd/MM/yyyy, h:mm a"}}</td>
+          </tr>
+
+          <tr>
+            <th scope="row">Expiry Days</th>
+            <td>{{barcodeInfo?.expiryDays}}</td>
+          </tr>
+          <tr>
+            <th scope="row">ReceivedTime</th>
+            <td>
             <span
-              *ngIf="barcodeInfo?.receivedTime; else spendingStatus">{{barcodeInfo?.receivedTime | date: "dd/MM/yyyy"}}</span>
-            <ng-template #spendingStatus>
-              <span class="">-</span>
-            </ng-template>
-          </td>
-        </tr>
+              *ngIf="barcodeInfo?.receivedTime; else spendingStatus">{{barcodeInfo?.receivedTime | date:  "dd/MM/yyyy, h:mm a"}}</span>
+              <ng-template #spendingStatus>
+                <span class="">-</span>
+              </ng-template>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">ReceivedTime</th>
+            <td>
+            <span
+              *ngIf="barcodeInfo?.receivedTime; else spendingStatus">{{barcodeInfo?.receivedTime | date:  "dd/MM/yyyy, h:mm a"}}</span>
+              <ng-template #spendingStatus>
+                <span class="">-</span>
+              </ng-template>
+            </td>
+          </tr>
+        </ng-container>
+
+        <!--Link Original and link print invoice-->
+        <ng-container>
+          <tr>
+            <th scope="row">Link Pay360</th>
+            <td ><a href="{{barcodeInfo?.url}}" target="_blank">{{barcodeInfo?.url}}</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Link invoice</th>
+            <td ><a href="./payment?id={{barcodeInfo?._id}}" target="_blank">{{barcodeInfo?._id}}</a></td>
+          </tr>
+        </ng-container>
         </tbody>
 
       </table>
     </div>
   </div>
-  <div class="text-center">
-    <button type="button" class="btn btn-primary" (click)="handleCloseButton()">Close</button>
+
+<!--Spinner loading-->
+  <ng-container *ngIf="isShowLoading">
+    <app-spinner-loading></app-spinner-loading>
+  </ng-container>
+
+  <!--Show alert request Success-->
+  <ng-container>
+    <div
+      *ngIf="isShowAlertSuccess"
+      class="text-success fw-bold mb-3 fade-in-alert"
+    >
+      Generate barcode success !!!
+    </div>
+  </ng-container>
+
+  <!--Show alert request fail-->
+  <ng-container>
+    <div
+      *ngIf="isShowAlertFail"
+      class="text-danger fw-bold mb-3 fade-in-alert"
+    >
+      Generate barcode get error !!!
+    </div>
+  </ng-container>
+
+
+
+  <!--Button Close and add new barcode-->
+  <div class="text-center div-center" *ngIf="!isShowLoading">
+    <button type="button" class="btn btn-secondary me-4" (click)="handleCloseButton()">Close</button>
+    <button *ngIf="isShowAddBtn" (click)="handleAddNewBarcode()" type="button" class="btn btn-primary">Add New Barcode</button>
+    <button *ngIf="isShowGenerateBtn" (click)="handleGenerateNewBarcode()" type="button"
+            class="btn btn-success">Generate New Barcode</button>
   </div>
 </div>

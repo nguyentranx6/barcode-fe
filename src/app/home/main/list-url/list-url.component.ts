@@ -21,9 +21,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {MatDialog} from "@angular/material/dialog";
-import {BarcodeDialogComponent} from "../../common/dialog/barcode-dialog/barcode-dialog.component";
-import {ActivatedRoute, Params} from "@angular/router";
+import { MatDialog } from '@angular/material/dialog';
+import { BarcodeDialogComponent } from '../../common/dialog/barcode-dialog/barcode-dialog.component';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-list-url',
@@ -38,6 +38,7 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
   public isShowResult: boolean = true;
   public isShowLoadingGetData: boolean = false;
   public isShowErrorSearch: boolean = false; //Show error if search get error
+  public isShowResultTitleSearch: boolean = false; //Show result title search
 
   //Key and category search
   public keySearch!: string;
@@ -66,23 +67,26 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
   formSearch: FormGroup;
   barcodes$: Observable<any> | undefined; //Observable data list link barcode
 
-  constructor(private barcodeService: BarcodeService,private dialog: MatDialog,private activatedRoute: ActivatedRoute,) {
+  constructor(
+    private barcodeService: BarcodeService,
+    private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.formSearch = new FormGroup({
       keySearch: new FormControl('', [Validators.required]),
       categorySearch: new FormControl('all', [Validators.required]),
     });
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   //Ng after view init
   ngAfterViewInit() {
     //On load get data, set timeout to avoid error ngafterviewinit
-    setTimeout(()=>{
+    setTimeout(() => {
+      this.resetPageWhenSort();
       this.checkQueryParam();
-    },0)
+    }, 0);
   }
 
   //Get all barcode from database
@@ -91,8 +95,8 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
     this.barcodes$.subscribe(
       (value) => {
         console.log('value', value);
-        this.dataSource = new MatTableDataSource<any>(value.data);
-        this.length = value.totalCount[0].count;
+        this.dataSource = new MatTableDataSource<any>(value?.data);
+        this.length = value?.totalCount[0]?.count;
       },
       (error) => {
         console.log('error', error);
@@ -118,6 +122,8 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
 
   //Handle search
   handleSearch() {
+    //Turn off title result search
+    this.isShowResultTitleSearch = false;
     //Turn loading spinner
     this.isShowLoading = true;
     //Get value from form
@@ -140,8 +146,10 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
           this.isShowLoading = false;
           console.log('data', value);
           //Set data to material table
-          this.dataSource = new MatTableDataSource<any>(value);
-          this.length = value.length;
+          this.dataSource = new MatTableDataSource<any>(value.data);
+          this.length = value.totalCount[0].count;
+          //Show title of result search
+          this.isShowResultTitleSearch = true;
         },
         () => {
           //Turn off loading and turn on error
@@ -155,9 +163,10 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
       );
   }
 
+  // when change option of select category search
   handleOnChangeCategory(evt: any) {
-    console.log('evt', evt);
-    console.log('change');
+    //Turn off title result search
+    this.isShowResultTitleSearch = false;
     let { categorySearch, keySearch } = this.formSearch.value;
     if (categorySearch === 'all') {
       this.formSearch.controls['keySearch'].setValue('');
@@ -165,30 +174,26 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
     }
   }
 
+
+//Show info when click on row of table
   handleShowBarcodeDetail(data: any) {
-
-    const editContractDialog = this.dialog.open(
-      BarcodeDialogComponent,
-      {
-        width: "50%",
-        height: "auto",
-        data: data,
-      }
-    );
-    editContractDialog.afterClosed().subscribe((value) => {
-
+    const editContractDialog = this.dialog.open(BarcodeDialogComponent, {
+      width: 'auto',
+      height: 'auto',
+      data: data,
     });
+    editContractDialog.afterClosed().subscribe((value) => {});
   }
 
-  /* handleSearch() {
-    this.inputSearch.valueChanges.pipe(
-      startWith(''),
-      debounceTime(400),
-      distinctUntilChanged()
-    );
-  }*/
+//Reset page index to 1 when sort
+  resetPageWhenSort(){
+    // If the user changes the sort order, reset back to the first page.
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+  }
 
-  handlePagination() {
+
+//Handle when user click pagination
+  handlePagination(id: string ='',key: string = '', filter: string = 'all') {
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
@@ -196,19 +201,26 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
           //Loading spinner
           this.isShowLoading = true;
 
+          //Get sort and order from table
+          let sort = this.sort.active;
+          let order;
+          this.sort.direction ==='asc'? order = "1": order ="-1"
+          //Get page and limit
+          console.log("this.paginator", this.paginator);
           let limit = this.paginator.pageSize;
-          let page = this.paginator.pageIndex + 1;
+          let page = this.paginator.pageIndex+1;
           //Reset data table
           this.dataSource = new MatTableDataSource<any>([]);
           this.length = 0;
 
           return this.barcodeService.searchBarcode(
-            undefined,
-            undefined,
-            undefined,
+            id,
+            key,
+            filter,
             limit,
             page,
-            undefined
+            sort,
+            order
           );
         })
       )
@@ -218,8 +230,8 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
           //Turn off loading
           this.isShowLoading = false;
           //Assign data to table
-          this.dataSource = new MatTableDataSource<any>(value.data);
-          this.length = value.totalCount[0].count;
+          this.dataSource = new MatTableDataSource<any>(value?.data);
+          this.length = value?.totalCount[0]?.count;
         },
         (error) => {
           console.log('error', error);
@@ -236,47 +248,18 @@ export class ListUrlComponent implements OnInit, AfterViewInit {
   }
 
   //On load check param
-  checkQueryParam(){
+  checkQueryParam() {
     this.activatedRoute.queryParams.subscribe({
       next: (value) => {
-        let clientId: any;
-        clientId = value.id;
-        if(clientId){
-          this.handleGetBarcodeByClientId(clientId)
+        let {id, key, filter } = value;
+        if (key && filter) {
+          this.handlePagination(undefined,key, filter);
+        } else if(id) {
+          this.handlePagination(id);
         } else {
           this.handlePagination()
         }
-
       },
     });
-  }
-
-  handleGetBarcodeByClientId(clientId: any){
-    this.isShowLoading = true;
-    this.barcodeService.searchBarcode(
-      undefined,
-      clientId,
-      "clientId",
-      undefined,
-      undefined,
-      undefined
-    ).pipe(pluck('data')).subscribe((value) => {
-        //Turn off loading
-        this.isShowLoading = false;
-        //Assign data to table
-        this.dataSource = new MatTableDataSource<any>(value);
-        this.length = value.length;
-      },
-      (error) => {
-        console.log('error', error);
-        //Turn off loading
-        this.isShowLoading = false;
-        //Show error message
-        this.isShowAlertRequestFail = true;
-        //set timeout to hidden message
-        setTimeout(() => {
-          this.isShowAlertRequestFail = false;
-        }, 3000);
-      });
   }
 }

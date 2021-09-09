@@ -19,7 +19,9 @@
 }
 
 @media (max-width: 576px){
-
+  .setting-container{
+    width: 100%;
+  }
   .setting-title-sm{
     display: block;
   }

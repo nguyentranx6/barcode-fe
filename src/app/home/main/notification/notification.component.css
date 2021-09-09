@@ -1,10 +1,23 @@
 .modal-info-alert {
   max-width: max-content!important;
 }
+.notify-item {
+  padding: 15px 15px;
+  margin: 12px 0;
+  border-radius: 8px;
+  color: var(--text-color-secondary);
+}
 
-
+.mat-paginator {
+  background-color: transparent;
+  color: var(--text-color-secondary);
+}
 @media (max-width: 576px) {
   .modal-info-alert {
     max-width: fit-content;
+  }
+  .notify-item {
+    padding-right: 2px;
+    padding-left: 10px;
   }
 }

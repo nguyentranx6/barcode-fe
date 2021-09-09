@@ -23,9 +23,9 @@
           (change)="handleOnChangeCategory($event)"
         >
           <option value="all">All</option>
-          <option value="email">Email</option>
-          <option value="clientName">Name</option>
-          <option value="customClientId">Client Id</option>
+          <option value="email">Client Email</option>
+          <option value="clientName">Client Name</option>
+          <option value="customClientId">Client ID</option>
         </select>
       </div>
       <!--Button Search-->
@@ -61,6 +61,8 @@
         mat-table
         [dataSource]="dataSource"
         matSort
+        matSortActive="createdAt"
+        matSortDisableClear
       >
         <!-- customClientId Column -->
         <ng-container matColumnDef="customClientId">
@@ -74,7 +76,7 @@
           </th>
           <td class="fade-in-alert" mat-cell *matCellDef="let row">
             <span class="mobile-label">Client Id:</span>
-            <span>{{ row.customClientId | uppercase }}</span>
+            <span>{{ row?.customClientId | uppercase }}</span>
           </td>
         </ng-container>
 
@@ -90,12 +92,12 @@
           </th>
           <td class="fade-in-alert" mat-cell *matCellDef="let row">
             <span class="mobile-label client-name">clientName:</span>
-            <span>{{ row.clientName | titlecase }}</span>
+            <span>{{ row?.clientName | titlecase }}</span>
           </td>
         </ng-container>
 
 
-
+        <!--Email column-->
         <ng-container matColumnDef="email">
           <th
             class="fade-in-alert"
@@ -107,10 +109,59 @@
           </th>
           <td class="fade-in-alert" mat-cell *matCellDef="let row">
             <span class="mobile-label">Email:</span>
-            <span>{{ row.email }}</span>
+            <span>{{ row?.email }}</span>
           </td>
         </ng-container>
 
+        <!--Quantity column-->
+        <ng-container matColumnDef="quantity">
+          <th
+            class="fade-in-alert"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Quantity
+          </th>
+          <td class="fade-in-alert" mat-cell *matCellDef="let row">
+            <span class="mobile-label">Quantity:</span>
+            <span>{{ row?.quantity }}</span>
+          </td>
+        </ng-container>
+
+        <!--Total Bill column-->
+        <ng-container matColumnDef="totalBill">
+          <th
+            class="fade-in-alert"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Total Bill
+          </th>
+          <td class="fade-in-alert" mat-cell *matCellDef="let row">
+            <span class="mobile-label">Total Bill:</span>
+            <span>{{ row?.totalBill| currency:"GBP":'symbol'}}</span>
+          </td>
+        </ng-container>
+
+        <!--Created day column-->
+        <ng-container matColumnDef="createdAt">
+          <th
+            class="fade-in-alert"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Created Day
+          </th>
+          <td class="fade-in-alert" mat-cell *matCellDef="let row">
+            <span class="mobile-label">Created Day:</span>
+            <span>{{ row?.createdAt | date:"dd/MM/yyyy" }}</span>
+          </td>
+        </ng-container>
+
+        <!--Header column-->
         <tr
           class="fade-in-alert fw-600 text-color-primary"
           mat-header-row

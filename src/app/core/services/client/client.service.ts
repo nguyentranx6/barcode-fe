@@ -11,14 +11,15 @@ export class ClientService {
   constructor(private apiService: ApiService) { }
 
   searchClient(
-    get = '',
+    id = '',
     search: string = '',
     filter: string = 'all',
     size = 10,
-    page = 1,
-    order = 0
+    page = 0,
+    sort: string='createdAt',
+    order ='1'
   ): Observable<any> {
-    let url = `client/search?key=${search}&get=${get}&filter=${filter}&size=${size}&page=${page}&order=${order}`;
+    let url = `client/search?id=${id}&key=${search}&filter=${filter}&size=${size}&page=${page}&sort=${sort}&order=${order}`;
     console.log("size", size);
     console.log("page", page);
     return this.apiService.get(url).pipe(shareReplay());

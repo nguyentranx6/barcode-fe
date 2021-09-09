@@ -1,10 +1,133 @@
 <div class="input-container box-shadow fade-in-alert">
   <div class="input-content mx-auto border-0">
     <!--Input form-->
-    <div class="input-form fade-in-alert" *ngIf="isShowInput">
-      <form action="#" class="" [formGroup]="priceInputForm" autocomplete="off">
+    <div class="fade-in-alert" *ngIf="isShowInput">
+      <form
+        class="input-form"
+        [formGroup]="priceInputForm"
+        autocomplete="off"
+        (ngSubmit)="handleGenerateLink($event)"
+      >
+        <!--Client ID Input-->
+        <div class="row mb-3">
+          <div class="col-12 col-sm-8 mx-auto">
+            <div class="mb-3 position-relative">
+              <label class="form-label" for="customClientId">Client ID</label>
+              <input
+                formControlName="customClientId"
+                type="text"
+                class="form-control"
+                id="customClientId"
+                name="customClientId"
+              />
+              <!--Show loading spinner check Client ID-->
+              <ng-container *ngIf="isShowLoadingCheckClientId">
+                <div
+                  class="
+                    spinner-border
+                    text-color-primary
+                    spinner-border-sm spinner-check-clientid
+                  "
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </ng-container>
+
+              <!--Show check mark-->
+              <!--Check mark success-->
+              <ng-container *ngIf="isShowCheckMarkClientIdSuccess">
+                <span class="check-mark-success">
+                  <svg
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 130.2 130.2"
+                  >
+                    <circle
+                      class="path circle"
+                      fill="none"
+                      stroke="#73AF55"
+                      stroke-width="8"
+                      stroke-miterlimit="10"
+                      cx="65.1"
+                      cy="65.1"
+                      r="62.1"
+                    />
+                    <polyline
+                      class="path check"
+                      fill="none"
+                      stroke="#73AF55"
+                      stroke-width="8"
+                      stroke-linecap="round"
+                      stroke-miterlimit="10"
+                      points="100.2,40.2 51.5,88.8 29.8,67.5 "
+                    />
+                  </svg>
+                </span>
+              </ng-container>
+
+              <!--Check mark fail-->
+              <ng-container *ngIf="isShowCheckMarkClientIdFail">
+                <span class="check-mark-fail">
+                  <svg
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 130.2 130.2"
+                  >
+                    <circle
+                      class="path circle"
+                      fill="none"
+                      stroke="#D06079"
+                      stroke-width="8"
+                      stroke-miterlimit="10"
+                      cx="65.1"
+                      cy="65.1"
+                      r="62.1"
+                    />
+                    <line
+                      class="path line"
+                      fill="none"
+                      stroke="#D06079"
+                      stroke-width="8"
+                      stroke-linecap="round"
+                      stroke-miterlimit="10"
+                      x1="34.4"
+                      y1="37.9"
+                      x2="95.8"
+                      y2="92.3"
+                    />
+                    <line
+                      class="path line"
+                      fill="none"
+                      stroke="#D06079"
+                      stroke-width="8"
+                      stroke-linecap="round"
+                      stroke-miterlimit="10"
+                      x1="95.8"
+                      y1="38"
+                      x2="34.4"
+                      y2="92.2"
+                    />
+                  </svg>
+                </span>
+              </ng-container>
+            </div>
+
+            <!--Show notice when check exist Client ID-->
+            <ng-container *ngIf="isShowExistCheckClientId">
+              <p class="text-success mb-0" role="alert">
+                * This Client ID is exist.
+              </p>
+            </ng-container>
+
+            <!--Show notice when check invoice number get error-->
+            <ng-container *ngIf="isShowErrorCheckClientId">
+              <p class="text-danger mb-0" role="alert">* Serve get error !</p>
+            </ng-container>
+          </div>
+        </div>
         <!--Client Name Input-->
-        <div class="row mb-3 ">
+        <div class="row mb-3">
           <div class="col-12 col-sm-8 mx-auto">
             <ng-container class="mb-3">
               <label class="form-label" for="clientName">Client Name</label>
@@ -18,8 +141,8 @@
             </ng-container>
           </div>
         </div>
+        <!--Client Email Input-->
         <div class="row mb-3">
-          <!--Client Email Input-->
           <div class="col-12 col-sm-8 mx-auto">
             <ng-container class="mb-3">
               <label class="form-label" for="email">Client Email</label>
@@ -33,9 +156,9 @@
               <!--Show notice when user not input email-->
               <ng-container
                 *ngIf="
-                !priceInputForm.controls['email'].valid &&
-                priceInputForm.controls['email'].touched
-              "
+                  !priceInputForm.controls['email'].valid &&
+                  priceInputForm.controls['email'].touched
+                "
               >
                 <p class="text-danger mt-2 mb-0 p-0" role="alert">
                   * Please enter correct email !
@@ -44,26 +167,12 @@
             </ng-container>
           </div>
         </div>
+        <!--Invoice number Input-->
         <div class="row mb-3">
-          <!--Client ID Input-->
           <div class="col-12 col-sm-8 mx-auto">
-            <ng-container class="mb-3">
-              <label class="form-label" for="customClientId">Client ID</label>
-              <input
-                formControlName="customClientId"
-                type="text"
-                class="form-control"
-                id="customClientId"
-                name="customClientId"
-              />
-            </ng-container>
-          </div>
-        </div>
-        <div class="row mb-3"> <!--Invoice number Input-->
-          <div class="col-12 col-sm-8 mx-auto">
-            <div class=" position-relative">
+            <div class="position-relative">
               <label class="form-label" for="invoiceNumber"
-              >Invoice Number</label
+                >Invoice Number</label
               >
               <input
                 formControlName="invoiceNumber"
@@ -71,8 +180,8 @@
                 class="form-control"
                 id="invoiceNumber"
                 name="invoiceNumber"
+                #invoiceNumberInput
               />
-
               <!--Show loading spinner check invoice-->
               <ng-container *ngIf="isShowLoadingCheckInvoice">
                 <div
@@ -86,6 +195,84 @@
                   <span class="visually-hidden">Loading...</span>
                 </div>
               </ng-container>
+
+              <!--Show check mark Invoice Number-->
+              <!--Check mark success-->
+              <ng-container *ngIf="isShowCheckMarkInvoiceSuccess">
+                <span class="check-mark-success">
+                  <svg
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 130.2 130.2"
+                  >
+                    <circle
+                      class="path circle"
+                      fill="none"
+                      stroke="#73AF55"
+                      stroke-width="8"
+                      stroke-miterlimit="10"
+                      cx="65.1"
+                      cy="65.1"
+                      r="62.1"
+                    />
+                    <polyline
+                      class="path check"
+                      fill="none"
+                      stroke="#73AF55"
+                      stroke-width="8"
+                      stroke-linecap="round"
+                      stroke-miterlimit="10"
+                      points="100.2,40.2 51.5,88.8 29.8,67.5 "
+                    />
+                  </svg>
+                </span>
+              </ng-container>
+
+              <!--Check mark fail-->
+              <ng-container *ngIf="isShowCheckMarkInvoiceFail">
+                <span class="check-mark-fail">
+                  <svg
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 130.2 130.2"
+                  >
+                    <circle
+                      class="path circle"
+                      fill="none"
+                      stroke="#D06079"
+                      stroke-width="8"
+                      stroke-miterlimit="10"
+                      cx="65.1"
+                      cy="65.1"
+                      r="62.1"
+                    />
+                    <line
+                      class="path line"
+                      fill="none"
+                      stroke="#D06079"
+                      stroke-width="8"
+                      stroke-linecap="round"
+                      stroke-miterlimit="10"
+                      x1="34.4"
+                      y1="37.9"
+                      x2="95.8"
+                      y2="92.3"
+                    />
+                    <line
+                      class="path line"
+                      fill="none"
+                      stroke="#D06079"
+                      stroke-width="8"
+                      stroke-linecap="round"
+                      stroke-miterlimit="10"
+                      x1="95.8"
+                      y1="38"
+                      x2="34.4"
+                      y2="92.2"
+                    />
+                  </svg>
+                </span>
+              </ng-container>
             </div>
             <!--Show notice when check exist invoice number-->
             <ng-container *ngIf="isShowExistCheckInvoice">
@@ -98,8 +285,10 @@
             <ng-container *ngIf="isShowErrorCheckInvoice">
               <p class="text-danger mb-0" role="alert">* Serve get error !</p>
             </ng-container>
-          </div></div>
-        <div class="row mb-3"><!--Price Input-->
+          </div>
+        </div>
+        <!--Price Input-->
+        <div class="row mb-3">
           <div class="col-12 col-sm-8 mx-auto">
             <ng-container class="mb-3">
               <label class="form-label" for="price">Price</label>
@@ -111,9 +300,8 @@
                 name="price"
               />
             </ng-container>
-          </div></div>
-
-
+          </div>
+        </div>
 
         <!--Button-->
         <ng-container *ngIf="isShowButtonGenerate">
@@ -122,9 +310,9 @@
               <ng-container class="mb-3">
                 <button
                   [disabled]="priceInputForm.invalid"
-                  type="button"
+                  type="submit"
                   class="btn btn-primary btn-disable"
-                  (click)="handleGenerateLink()"
+                  #buttonGenerate
                 >
                   Generate
                 </button>
@@ -139,22 +327,22 @@
 
         <!--Show alert request fail-->
         <ng-container>
-          <div *ngIf="isShowAlertFail" class="text-danger fw-bold mb-3 fade-in-alert">
+          <div
+            *ngIf="isShowAlertFail"
+            class="text-danger fw-bold mb-3 fade-in-alert"
+          >
             Generate barcode get error !!!
           </div>
         </ng-container>
       </form>
     </div>
 
-
     <!--Show output result success-->
     <ng-container *ngIf="isShowOutput">
-      <div class="row text-center fade-in-alert" >
+      <div class="row text-center fade-in-alert">
         <div class="col-12 col-md-7">
           <div class="output-form mt-3">
-            <div class="text-success fw-bold mb-3">
-              Generate link success!
-            </div>
+            <div class="text-success fw-bold mb-3">Generate link success!</div>
             <div class="input-group">
               <input
                 disabled
@@ -173,12 +361,18 @@
               </button>
             </div>
             <div>
-             <span
-               #showButton
-               class="btn btn-secondary mt-3 mb-4 me-4"
-               (click)="handleToggleShowLink($event)"
-             >Show</span
-             >
+              <span
+                #showButton
+                class="btn btn-secondary mt-3 mb-4 me-4"
+                (click)="handleToggleShowLink($event)"
+                >Show</span
+              >
+              <span
+                #closeButton
+                class="btn btn-danger mt-3 mb-4 me-4"
+                (click)="handleCloseButton($event)"
+                >Close</span
+              >
             </div>
           </div>
         </div>
@@ -186,20 +380,19 @@
           <p style="color: red">
             Do not hand over your mobile device to anyone at any time
           </p>
-          <a href="{{ imgBarcodeUrl }}">
+          <!--<a>
             <img
-              src="{{ imgBarcodeUrl }}"
+              [src]="'asset/barcode/'+ barcodeNumber+'jpg'"
               alt="Img barcode"
               width="240"
               height="80"
             />
-          </a>
+          </a>-->
 
           <p class="m-0 text-color-secondary">{{ barcodeNumber }}</p>
           <p class="m-0 text-color-primary">{{ price }} £</p>
         </div>
       </div>
     </ng-container>
-
   </div>
 </div>

@@ -1,11 +1,24 @@
 .barcode-dialog {
-  padding: 12px 12px 5px 12px;
+  padding: 30px 40px;
 }
 
-table th,td {
-  padding: 3px 5px;
+table th, td {
+  padding: 5px 10px;
+}
+
+table th {
+  font-weight: 600;
+  color: var(--text-color-secondary);
 }
 
 a:focus {
   outline: none;
+}
+
+/* Overwrite */
+
+@media (max-width: 576px) {
+  table td{
+    word-break: break-word;
+  }
 }

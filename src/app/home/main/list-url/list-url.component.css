@@ -61,10 +61,8 @@ table {
     width: 100%;
     margin: 10px auto;
   }
-  table {
-    color: red;
-  }
-  .ist-url {
+
+  .list-url {
     padding: 0;
   }
   .mobile-label {
@@ -80,7 +78,6 @@ table {
   td {
     display: flex;
     flex-direction: row;
-    padding: 8px 24px;
     align-items: start;
   }
 

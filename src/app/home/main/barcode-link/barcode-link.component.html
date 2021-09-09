@@ -1,0 +1,126 @@
+<div class="container">
+  <div class="barcode-link-container">
+    <!--Content if get success data-->
+    <ng-container *ngIf="barcodeInfo$| async as barcodeInfo">
+      <div #pdfTable class="barcode-link box-shadow mx-auto bg-color-primary">
+        <!--Print content-->
+        <!--Barcode header-->
+        <div class="barcode-header">
+          <div class="row justify-content-between">
+            <!--Logo store-->
+
+            <div class="col-12 col-sm-4 barcode-header-logo ps-5 barcode-logo">
+              <img class="img-fluid" src="assets/img/logo.png" alt="" />
+            </div>
+            <!--Info of store-->
+            <div class="col-12 col-sm-8">
+              <div class="row">
+                <div class="col-12 fst-italic d-flex">
+                  <span>From</span>
+                  <span class="ms-auto d-none d-sm-block">To</span>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div>
+                    <ul class="list-unstyled">
+                      <li class="fw-600">Kevin and Bros Ltd</li>
+                      <li>The Wenta Business Centre</li>
+                      <li>Suite 66, Electric Avenue</li>
+                      <li>Enfield</li>
+                      <li>EN3 7XU</li>
+                    </ul>
+                  </div>
+                </div>
+                <!--Info client-->
+                <div class="col-12 col-sm-6 text-start text-sm-end pe-3">
+                  <span class="fst-italic d-block d-sm-none">To</span>
+                    <ul class="list-unstyled">
+                      <li class="fw-600">{{barcodeInfo?.client?.clientName|titlecase}}</li>
+                      <li>{{barcodeInfo?.client?.email}}</li>
+                    </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!--Invoice to-->
+        <div class="invoice-info">
+          <div class="row">
+            <div class="col-12 col-sm-5 align-self-center">
+              <ul class="list-unstyled">
+                <li><strong>Invoice number:</strong> #{{barcodeInfo.invoiceNumber| uppercase}}</li>
+                <li><strong>Invoice Date:</strong> {{barcodeInfo?.createdAt|date: "dd/MM/yyyy"}}</li>
+                <li><strong>Expiry Days:</strong> {{barcodeInfo?.expiryDays}}</li>
+                <li>
+                  <strong>Status:</strong>
+                  <span class="ms-2 badge bg-danger">{{barcodeInfo?.status|uppercase}}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="col-12 col-sm-7 text-center barcode-img">
+              <p class="text-danger fw-600">
+                Do not hand over your mobile device to anyone at any time
+              </p>
+              <img
+                width="300px"
+                src="assets/barcode/{{barcodeInfo?.barcodeNumber}}.jpg"
+                alt="Barcode Img"
+                class="img-fluid"
+              />
+              <p class="m-0 fw-600">{{barcodeInfo?.barcodeNumber}}</p>
+              <p class="m-0 fw-600">£{{barcodeInfo?.price}}</p>
+            </div>
+          </div>
+          <ng-container >
+            <div class="barcode-button w-75 mx-auto mt-3">
+              <div class="printer-button text-center">
+                <button #btnPrint (click)="downloadAsJpeg()" class="btn btn-secondary ms-3">
+                  <fa-icon class="me-2" [icon]="faDownload"></fa-icon>
+                  Download Invoice
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="barcode-note">
+          <div class="d-sm-flex align-self-center mb-3 d-flex">
+            <div>
+              <img src="assets/img/logo4.png" alt="" />
+            </div>
+            <p class="ms-2 text-color-secondary text-justify">
+              Please take your barcode to any PayPoint store where you see the
+              PayPoint logo. Present the barcode to the agent so that it can be
+              scanned. Make sure you scroll down to fully reveal your barcode so
+              the agent can easily scan it.
+            </p>
+          </div>
+          <h4 class="text-color-primary">Agent Instructions</h4>
+          <p class="text-color-secondary px-3 text-justify">
+            Take the customer's cash and scan the barcode on this invoice. If the
+            barcode will not scan, type in the 19 digit code above and select 2 =
+            barcode on the touchscreen. Type in the invoice amount and press
+            Enter. Select Confirm and hand the customer their PayPoint receipt.
+          </p>
+          <p class="text-color-secondary px-3">Please do not request the customer's mobile device.</p>
+        </div>
+        <hr>
+        <p class="text-color-primary fst-italic">Thank you for your business</p>
+        <ng-container *ngIf="isLogin$|async">
+          <div class="text-center back-to-home-btn">
+            <button #btnBackToHome routerLink="/admin" class="btn btn-color-primary {
+">Back To Home</button>
+          </div>
+        </ng-container>
+      </div>
+      <hr>
+    </ng-container>
+
+   <!--Show error if get data fail-->
+    <ng-container *ngIf="isShowErrorGetData">
+      <div class="w-25 mx-auto position-absolute barcode-link-error text-center">
+        <p class="alert alert-danger">This barcode link may not exist or expired, Please contact
+          admin !</p>
+      </div>
+    </ng-container>
+  </div>
+</div>

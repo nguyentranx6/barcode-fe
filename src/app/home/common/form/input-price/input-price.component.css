@@ -4,6 +4,7 @@
   padding: 30px 20px;
   margin: 0 auto;
   width: 60%;
+  margin-bottom: 30px;
 }
 .input-content {
  /*// background-color: #eeb4cf;*/
@@ -51,12 +52,73 @@ input.after-copy {
 }
 
 /* Spinner checkinvoice */
-.spinner-check-invoice {
+.spinner-check-invoice, .spinner-check-clientid {
   position: absolute;
   top: 45px;
   right: -25px;
 }
 
+/* Check mark */
+.check-mark-success, .check-mark-fail {
+  position: absolute;
+  top: 40px;
+  right: -35px;
+}
+.check-mark-success svg, .check-mark-fail svg {
+  width: 25px;
+}
+.path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+}
+.path.circle {
+  -webkit-animation: dash 0.9s ease-in-out;
+  animation: dash 0.9s ease-in-out;
+}
+.path.line {
+  stroke-dashoffset: 1000;
+  -webkit-animation: dash 0.9s 0.35s ease-in-out forwards;
+  animation: dash 0.9s 0.35s ease-in-out forwards;
+}
+.path.check {
+  stroke-dashoffset: -100;
+  -webkit-animation: dash-check 0.9s 0.35s ease-in-out forwards;
+  animation: dash-check 0.9s 0.35s ease-in-out forwards;
+}
+
+/* Key frame for check mark */
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@-webkit-keyframes dash-check {
+  0% {
+    stroke-dashoffset: -100;
+  }
+  100% {
+    stroke-dashoffset: 900;
+  }
+}
+@keyframes dash-check {
+  0% {
+    stroke-dashoffset: -100;
+  }
+  100% {
+    stroke-dashoffset: 900;
+  }
+}
 
 /* Responsive */
 
@@ -64,7 +126,7 @@ input.after-copy {
   .input-container {
     width: 100%;
   }
-  .spinner-check-invoice {
+  .spinner-check-invoice, .spinner-check-clientid,.check-mark-success, .check-mark-fail {
     top: 40px;
     right: 20px;
   }

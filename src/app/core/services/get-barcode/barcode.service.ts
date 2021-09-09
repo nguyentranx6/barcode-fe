@@ -35,14 +35,15 @@ export class BarcodeService {
 
   //Search barcode
   searchBarcode(
-    get = '',
+    id = '',
     search: string = '',
     filter: string = 'all',
     size = 10,
-    page = 1,
-    order = 0
+    page = 0,
+    sort: string='transactionTime',
+    order ='1'
   ): Observable<any> {
-    let url = `barcode/search?key=${search}&get=${get}&filter=${filter}&size=${size}&page=${page}&order=${order}`;
+    let url = `barcode/search?id=${id}&key=${search}&filter=${filter}&size=${size}&page=${page}&sort=${sort}&order=${order}`;
     return this.apiService.get(url).pipe(shareReplay());
   }
 
@@ -52,5 +53,14 @@ export class BarcodeService {
     return this.apiService.get(url);
   }
 
+  checkClientId(clientId: string): Observable<any>{
+    let url = `barcode/check?clientid=${clientId}`;
+    return this.apiService.get(url);
+  }
 
+//Add new barcode when expired
+  generateNewBarcode(data: any):Observable<any>{
+    let url = `barcode`;
+    return this.apiService.put(url,data);
+  }
 }

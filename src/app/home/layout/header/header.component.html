@@ -21,15 +21,15 @@
              ></span>
 
             <!--Notify balloon -->
-            <ng-container *ngIf="(newNotify$|async) as newNotify">
+            <ng-container *ngIf="newNotify > 0">
               <!--Notify circle-->
-              <ng-container *ngIf="newNotify.length>0">
-                <span class="badge-notify">{{newNotify.length}}</span>
+              <ng-container>
+                <span class="badge-notify">{{newNotify}}</span>
               </ng-container>
               <!--Notify dropdown content-->
               <ng-container>
                 <div #notifyDropdown class="dropdown-notify-content">
-                  <span routerLink="notification">* {{newNotify.length>0 ? newNotify.length: 0}} new transaction
+                  <span routerLink="notification" [queryParams]="{type: 'new'}">* {{newNotify}} new transaction
                     paid</span>
                 </div>
               </ng-container>

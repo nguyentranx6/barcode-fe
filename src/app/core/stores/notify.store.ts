@@ -33,13 +33,15 @@ export class NotifyStore {
 
   //Get new notify
   getNewNotify() {
+    //Set interval to request consequent to database to get new paid
    setInterval(()=>{
      this.notifyService
-       .getNotify('new')
+       .searchNotify('new')
        .pipe(
          pluck("data"),
          tap((value) => {
            /*console.log(`Value interval ${Math.random()}`, value)*/
+           //Assign value to store
            this.allNewNotify.next(value);
          })
        )

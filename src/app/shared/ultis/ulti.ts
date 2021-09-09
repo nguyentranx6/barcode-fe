@@ -4,3 +4,11 @@ export const uuidv4 = function () {
     return v.toString(16);
   });
 }
+
+export const titleCase = function (str: any) {
+  str = str.toLowerCase().split(' ');
+  for (let i = 0; i < str.length; i++) {
+    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+  }
+  return str.join(' ');
+}

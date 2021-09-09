@@ -35,6 +35,7 @@ import {MaterialModule} from "./shared/meterial/meterial/material.module";
 import {MatSortModule} from "@angular/material/sort";
 import { BarcodeDialogComponent } from './home/common/dialog/barcode-dialog/barcode-dialog.component';
 import { ClientDialogComponent } from './home/common/dialog/client-dialog/client-dialog.component';
+import { BarcodeLinkComponent } from './home/main/barcode-link/barcode-link.component';
 
 
 
@@ -66,12 +67,13 @@ import { ClientDialogComponent } from './home/common/dialog/client-dialog/client
     ClientComponent,
     BarcodeDialogComponent,
     ClientDialogComponent,
+    BarcodeLinkComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    FormsModule,
     HttpClientModule,
     FontAwesomeModule,
     RouterModule,

@@ -1,28 +1,60 @@
-<div class="notification fade-in-alert" *ngIf="allNotify$|async as allNotify">
-  <div class="notify-content">
-    <ng-container *ngFor="let item of allNotify">
-      <div data-bs-toggle="modal" data-bs-target="#modal" (click)="handleClick($event)">
-        <div class="alert hover-cursor" [ngClass]="{'alert-success': item.status==='unread','alert-secondary':
-        item.status==='read'}"
-             role="alert"
-             id="{{item.barcodeId}}"
-             [attr.data-notify-id]="item?.barcodeId">
-          Barcode with number {{item?.barcodeNumber|| "xxx-xxx-xxx-xxx"}} is paid !
-        </div>
-      </div>
-    </ng-container>
-  </div>
+<div class="notification-container">
+  <!--Show error if get data fail-->
+  <ng-container *ngIf="isShowAlertRequestFail">
+    <app-alert-fail
+      [message]="'Request data get error from server'"
+    ></app-alert-fail>
+  </ng-container>
 
-  <!--Modal show info-->
-  <ng-container>
-    <div class="modal fade-in-alert" id="modal" #alertModal>
-      <div class="modal-dialog modal-info-alert">
-        <div class="modal-content">
-          <app-alert-modal [idNotify$]="idNotify$"></app-alert-modal>
-        </div>
-      </div>
+  <!--Show loading spinner-->
+  <ng-container *ngIf="isShowLoading">
+    <div class="spinner-container">
+      <app-spinner-loading></app-spinner-loading>
     </div>
   </ng-container>
 
+  <div
+    class="notification fade-in-alert"
+    *ngIf="allNotify$ | async as allNotify"
+  >
+    <!--Notify content-->
+    <div class="notify-content" *ngIf="allNotify; else noDataNotify">
+      <ng-container *ngFor="let item of allNotify">
+        <div
+          (click)="handleClick(item?.barcodeId)"
+          class="d-flex justify-content-between align-items-center notify-item"
+          [ngClass]="{
+            'alert-success': item.status === 'unread',
+            'alert-secondary': item.status === 'read'
+          }"
+        >
+          <div
+            class="hover-cursor"
+            role="alert"
+            id="{{ item.barcodeId }}"
+            [attr.data-notify-id]="item?.barcodeId"
+          >
+            Barcode with number
+            {{ item?.barcodeNumber || "xxx-xxx-xxx-xxx" }} is paid !
+          </div>
+          <div class="notify-update-date small fst-italic align-self-end">
+            Date paid: {{ item?.updatedAt | date: "dd/MM/yyyy, h:mm a" }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 
+  <!--No data-->
+  <ng-template #noDataNotify>
+    <div class="fw-600 text-danger text-center">No data</div>
+  </ng-template>
+
+  <!--Paginator-->
+  <mat-paginator
+    aria-label="Select page"
+    showFirstLastButtons
+    [length]="length"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+  ></mat-paginator>
 </div>

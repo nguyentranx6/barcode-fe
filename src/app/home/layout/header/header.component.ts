@@ -13,6 +13,8 @@ import {
 import { AuthService } from '../../../core/services/auth/auth.service';
 import {NotifyStore} from "../../../core/stores/notify.store";
 import {Observable} from "rxjs";
+import {NotifyService} from "../../../core/services/notify/notify.service";
+import {pluck} from "rxjs/operators";
 
 @Component({
   selector: 'app-header',
@@ -29,6 +31,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   //Store notify get from sever
   public newNotify$!: Observable<any>; // new notify
+  public newNotify!: number; // new notify
 
   //Dom to icon
   @ViewChild('userIcon') userIcon!: ElementRef;
@@ -36,10 +39,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   @ViewChild('notifyIcon') notifyIcon!: ElementRef;
   @ViewChild('notifyDropdown') notifyDropdown!: ElementRef;
 
-  constructor(private authService: AuthService, private notifyStore: NotifyStore) {}
+  constructor(private authService: AuthService, private notifyService: NotifyService) {}
 
   ngOnInit(): void {
-    this.getNotify();
+   //setInterval(()=> this.getNotify(), 5000)
   }
 
   ngAfterViewInit() {
@@ -49,7 +52,16 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   //Get notify data from store
   getNotify(){
-    this.newNotify$ = this.notifyStore.allNewNotify$;
+    this.notifyService.searchNotify('new').pipe(pluck('data')).subscribe(
+      value => {
+        //console.log("value request new notify", value)
+        this.newNotify = value?.totalCount[0]?.count;
+    },
+      ()=>{
+        console.log("error",)
+        this.newNotify = 0;
+      })
+
   }
 
   //Show menu when click user icon
